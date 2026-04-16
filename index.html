@@ -9,86 +9,89 @@
 *{box-sizing:border-box;margin:0;padding:0;}
 :root{--bg:#191919;--bg2:#222220;--bg3:#2a2a28;--border:rgba(255,255,255,0.07);--text:#e8e6df;--muted:#666;--dim:#444;}
 html{scroll-behavior:smooth;}
-body{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;min-height:100vh;}
+body{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;min-height:100vh;cursor:none;}
 
-/* NAV */
+#cur{position:fixed;width:8px;height:8px;border-radius:50%;background:var(--text);pointer-events:none;z-index:9999;will-change:transform;transform:translate(-50%,-50%);mix-blend-mode:difference;}
+#cur2{position:fixed;width:32px;height:32px;border-radius:50%;border:1px solid rgba(232,230,223,0.4);pointer-events:none;z-index:9998;will-change:transform;transform:translate(-50%,-50%);mix-blend-mode:difference;}
+
 nav{position:sticky;top:0;z-index:100;background:var(--bg);border-bottom:0.5px solid var(--border);display:flex;justify-content:space-between;align-items:center;padding:1rem 2rem;}
 .logo{font-family:'Space Mono',monospace;font-size:0.85rem;font-weight:700;letter-spacing:0.1em;color:var(--text);}
 nav ul{list-style:none;display:flex;gap:0;}
 nav ul li a{display:block;padding:0.5rem 1rem;font-size:0.7rem;letter-spacing:0.12em;text-transform:uppercase;color:var(--muted);text-decoration:none;border:0.5px solid transparent;transition:all 0.2s;}
 nav ul li a:hover{color:var(--text);border-color:var(--border);background:var(--bg2);}
 
-/* LAYOUT */
 .dashboard{padding:1.5rem 2rem;display:grid;gap:1rem;}
 
-/* HERO ROW */
+/* HERO — PULSAR */
 .hero-row{display:grid;grid-template-columns:2fr 1fr 1fr;gap:1rem;}
+.pulsar-card{background:#000;border:0.5px solid var(--border);border-radius:8px;overflow:hidden;position:relative;min-height:220px;}
+.pulsar-card canvas{position:absolute;inset:0;width:100%;height:100%;}
 
 .card{background:var(--bg2);border:0.5px solid var(--border);border-radius:8px;padding:1.25rem 1.5rem;}
 .card-label{font-size:0.65rem;font-family:'Space Mono',monospace;letter-spacing:0.15em;text-transform:uppercase;color:var(--muted);margin-bottom:0.75rem;}
-.card-value{font-size:1.8rem;font-weight:500;color:var(--text);line-height:1.1;}
-.card-sub{font-size:0.75rem;color:var(--dim);margin-top:0.5rem;line-height:1.5;}
-
-/* NAME CARD */
-.name-card{background:var(--bg2);border:0.5px solid var(--border);border-radius:8px;padding:2rem 1.5rem;display:flex;flex-direction:column;justify-content:space-between;}
-.name-big{font-family:'Space Mono',monospace;font-size:clamp(2.5rem,5vw,4.5rem);font-weight:700;letter-spacing:0.05em;color:var(--text);line-height:0.9;}
-.name-tag{font-size:0.7rem;letter-spacing:0.2em;color:var(--muted);text-transform:uppercase;margin-top:1rem;}
-
-/* STAT CARDS */
 .stat-card{display:flex;flex-direction:column;justify-content:space-between;}
 .stat-number{font-family:'Space Mono',monospace;font-size:3rem;font-weight:700;color:var(--text);line-height:1;}
 .stat-desc{font-size:0.75rem;color:var(--dim);line-height:1.6;margin-top:0.75rem;}
 
-/* ABOUT ROW */
+/* ABOUT */
 .about-row{display:grid;grid-template-columns:1fr 2fr;gap:1rem;}
 .about-label-card{display:flex;align-items:flex-end;}
 .about-label-card .big-label{font-size:clamp(3rem,6vw,5rem);font-weight:900;color:var(--bg3);letter-spacing:-0.02em;line-height:1;-webkit-text-stroke:0.5px var(--border);}
 .about-text-card .body{font-size:0.95rem;line-height:1.85;color:#888;max-width:600px;}
 .about-text-card .body strong{color:var(--text);font-weight:500;}
 
-/* SKILLS ROW */
-.skills-row{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;}
-.skill-card{position:relative;overflow:hidden;cursor:default;}
+/* SKILLS */
+.skills-row{display:grid;grid-template-columns:1fr 2fr;gap:1rem;}
+.skill-cards{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;}
+.skill-card{background:var(--bg2);border:0.5px solid var(--border);border-radius:8px;padding:1.25rem 1.5rem;position:relative;overflow:hidden;cursor:default;}
 .skill-card:hover{border-color:rgba(255,255,255,0.15);}
 .skill-card:hover .skill-bg{opacity:1;}
 .skill-bg{position:absolute;inset:0;opacity:0;transition:opacity 0.4s;background:var(--bg3);}
 .skill-title{font-size:1.1rem;font-weight:500;color:var(--text);position:relative;z-index:1;margin-bottom:0.5rem;}
 .skill-desc{font-size:0.8rem;color:var(--muted);line-height:1.6;position:relative;z-index:1;}
 .skill-index{font-family:'Space Mono',monospace;font-size:0.65rem;color:var(--dim);margin-bottom:1rem;position:relative;z-index:1;}
+.solar-card{background:#000;border:0.5px solid var(--border);border-radius:8px;overflow:hidden;position:relative;}
+.solar-card canvas{position:absolute;inset:0;width:100%;height:100%;}
 
-/* PRICING ROW */
+/* PRICING */
 .pricing-row{display:grid;grid-template-columns:1fr 1fr;gap:1rem;}
-.pricing-card .price{font-family:'Space Mono',monospace;font-size:2.5rem;font-weight:700;color:var(--text);margin-bottom:0.5rem;}
+.pricing-card .price{font-family:'Space Mono',monospace;font-size:2.5rem;font-weight:700;color:transparent;-webkit-text-stroke:1px rgba(232,230,223,0.25);transition:all 0.4s;cursor:default;}
+.pricing-card .price:hover{color:var(--text);-webkit-text-stroke:0px;}
 .pricing-card .price-note{font-size:0.8rem;color:var(--muted);line-height:1.6;}
 .philosophy-card .phil-text{font-size:0.85rem;line-height:1.8;color:#666;font-style:italic;}
 .philosophy-card .phil-text em{color:#888;font-style:normal;}
 
-/* CONTACT ROW */
+/* CONTACT */
 .contact-row{display:grid;grid-template-columns:1fr 2fr;gap:1rem;margin-bottom:1.5rem;}
 .contact-label-card{display:flex;align-items:flex-end;}
 .contact-label-card .big-label{font-size:clamp(3rem,6vw,5rem);font-weight:900;color:var(--bg3);letter-spacing:-0.02em;-webkit-text-stroke:0.5px var(--border);}
-.form-card{}
 .form-grid{display:grid;grid-template-columns:1fr 1fr;gap:0.75rem;margin-bottom:0.75rem;}
 .full{grid-column:1/-1;}
 input,textarea{width:100%;padding:0.75rem 1rem;background:var(--bg);border:0.5px solid var(--border);border-radius:6px;color:var(--text);font-family:'Inter',sans-serif;font-size:0.85rem;outline:none;transition:border-color 0.2s;resize:none;}
 input::placeholder,textarea::placeholder{color:var(--dim);}
 input:focus,textarea:focus{border-color:rgba(255,255,255,0.2);}
 textarea{height:100px;}
-.submit{width:100%;padding:0.85rem;background:var(--text);color:var(--bg);border:none;border-radius:6px;font-family:'Space Mono',monospace;font-size:0.75rem;letter-spacing:0.15em;cursor:pointer;transition:opacity 0.2s;margin-top:0.25rem;}
+.submit{width:100%;padding:0.85rem;background:var(--text);color:var(--bg);border:none;border-radius:6px;font-family:'Space Mono',monospace;font-size:0.75rem;letter-spacing:0.15em;cursor:none;transition:opacity 0.2s;margin-top:0.25rem;}
 .submit:hover{opacity:0.85;}
 
-/* FOOTER */
 .footer-bar{border-top:0.5px solid var(--border);padding:1rem 2rem;display:flex;justify-content:space-between;font-size:0.65rem;font-family:'Space Mono',monospace;color:var(--muted);letter-spacing:0.1em;}
 
-/* MOBILE */
 @media(max-width:800px){
-  .hero-row{grid-template-columns:1fr;}.about-row{grid-template-columns:1fr;}.skills-row{grid-template-columns:1fr;}.pricing-row{grid-template-columns:1fr;}.contact-row{grid-template-columns:1fr;}.about-label-card{display:none;}.contact-label-card{display:none;}
+  .hero-row,.about-row,.skills-row,.pricing-row,.contact-row{grid-template-columns:1fr;}
+  .skill-cards{grid-template-columns:1fr;}
+  .about-label-card,.contact-label-card{display:none;}
+  .solar-card{height:280px;}
   nav ul{display:none;}
   .dashboard{padding:1rem;}
+  body{cursor:auto;}
+  #cur,#cur2{display:none;}
 }
 </style>
 </head>
 <body>
+
+<div id="cur"></div>
+<div id="cur2"></div>
 
 <nav>
   <span class="logo">nulpunkt</span>
@@ -102,14 +105,9 @@ textarea{height:100px;}
 
 <div class="dashboard">
 
-  <!-- HERO ROW -->
   <div class="hero-row">
-    <div class="name-card card">
-      <div>
-        <div class="card-label">bureau</div>
-        <div class="name-big">nul<br>punkt</div>
-      </div>
-      <div class="name-tag">finding the zero point — est. now</div>
+    <div class="pulsar-card">
+      <canvas id="pulsarCanvas"></canvas>
     </div>
     <div class="card stat-card">
       <div class="card-label">focus</div>
@@ -123,7 +121,6 @@ textarea{height:100px;}
     </div>
   </div>
 
-  <!-- ABOUT ROW -->
   <div class="about-row" id="about">
     <div class="card about-label-card">
       <div class="big-label">ABOUT</div>
@@ -138,34 +135,36 @@ textarea{height:100px;}
     </div>
   </div>
 
-  <!-- SKILLS ROW -->
   <div class="skills-row" id="skills">
-    <div class="card skill-card">
-      <div class="skill-bg"></div>
-      <div class="skill-index">01</div>
-      <div class="skill-title">operational optimization</div>
-      <div class="skill-desc">identifying inefficiencies in complex e-commerce operations and making them measurable, predictable, and fixable</div>
+    <div class="solar-card">
+      <canvas id="solarCanvas"></canvas>
     </div>
-    <div class="card skill-card">
-      <div class="skill-bg"></div>
-      <div class="skill-index">02</div>
-      <div class="skill-title">architecture</div>
-      <div class="skill-desc">designing systems that scale — from tech stack decisions to workflow design and organizational structure</div>
-    </div>
-    <div class="card skill-card">
-      <div class="skill-bg"></div>
-      <div class="skill-index">03</div>
-      <div class="skill-title">automation</div>
-      <div class="skill-desc">removing friction through intelligent automation — so humans can focus on what actually requires human judgment</div>
+    <div class="skill-cards">
+      <div class="skill-card">
+        <div class="skill-bg"></div>
+        <div class="skill-index">01</div>
+        <div class="skill-title">operational optimization</div>
+        <div class="skill-desc">identifying inefficiencies in complex e-commerce operations and making them measurable, predictable, and fixable</div>
+      </div>
+      <div class="skill-card">
+        <div class="skill-bg"></div>
+        <div class="skill-index">02</div>
+        <div class="skill-title">architecture</div>
+        <div class="skill-desc">designing systems that scale — from tech stack decisions to workflow design and organizational structure</div>
+      </div>
+      <div class="skill-card">
+        <div class="skill-bg"></div>
+        <div class="skill-index">03</div>
+        <div class="skill-title">automation</div>
+        <div class="skill-desc">removing friction through intelligent automation — so humans can focus on what actually requires human judgment</div>
+      </div>
     </div>
   </div>
 
-  <!-- PRICING ROW -->
   <div class="pricing-row" id="pricing">
     <div class="card pricing-card">
       <div class="card-label">pricing</div>
       <div class="price">expensive</div>
-      <div class="price-note">quality work at the right price point. if budget is the primary concern, we are probably not the right fit — and that is okay.</div>
     </div>
     <div class="card philosophy-card">
       <div class="card-label">the zero point philosophy</div>
@@ -176,12 +175,11 @@ textarea{height:100px;}
     </div>
   </div>
 
-  <!-- CONTACT ROW -->
   <div class="contact-row" id="contact">
     <div class="card contact-label-card">
       <div class="big-label">CON<br>TACT</div>
     </div>
-    <div class="card form-card">
+    <div class="card">
       <div class="card-label">contact</div>
       <div class="form-grid">
         <input type="text" placeholder="name">
@@ -200,5 +198,148 @@ textarea{height:100px;}
   <span>finding the zero point</span>
 </div>
 
+<script>
+// CURSOR
+const cur=document.getElementById('cur'),cur2=document.getElementById('cur2');
+let mx=0,my=0,cx=0,cy=0;
+document.addEventListener('mousemove',e=>{
+  mx=e.clientX;my=e.clientY;
+  cur.style.transform=`translate(calc(${mx}px - 50%),calc(${my}px - 50%))`;
+},{passive:true});
+(function lerp(){cx+=(mx-cx)*0.1;cy+=(my-cy)*0.1;cur2.style.transform=`translate(calc(${cx}px - 50%),calc(${cy}px - 50%))`;requestAnimationFrame(lerp);})();
+
+// PULSAR
+const pc=document.getElementById('pulsarCanvas');
+const pctx=pc.getContext('2d');
+let pW,pH;
+function resizeP(){pW=pc.width=pc.offsetWidth;pH=pc.height=pc.offsetHeight;}
+resizeP();
+window.addEventListener('resize',resizeP);
+
+const stars=[];
+for(let i=0;i<180;i++)stars.push({x:Math.random(),y:Math.random(),r:Math.random()*1+0.3,o:Math.random(),s:Math.random()*0.008+0.002});
+
+let pFrame=0;
+function drawPulsar(){
+  pctx.fillStyle='rgba(0,0,0,0.3)';
+  pctx.fillRect(0,0,pW,pH);
+  const cx=pW/2,cy=pH/2;
+
+  // Stars
+  stars.forEach(s=>{
+    s.o+=s.s;
+    const op=0.15+0.45*Math.abs(Math.sin(s.o));
+    pctx.beginPath();pctx.arc(s.x*pW,s.y*pH,s.r,0,Math.PI*2);
+    pctx.fillStyle=`rgba(232,230,223,${op})`;pctx.fill();
+  });
+
+  // Pulsar beams
+  const beamAngle=pFrame*0.018;
+  for(let b=0;b<2;b++){
+    const a=beamAngle+b*Math.PI;
+    const grad=pctx.createLinearGradient(cx,cy,cx+Math.cos(a)*pW,cy+Math.sin(a)*pH);
+    grad.addColorStop(0,'rgba(232,230,223,0.35)');
+    grad.addColorStop(0.4,'rgba(232,230,223,0.08)');
+    grad.addColorStop(1,'rgba(232,230,223,0)');
+    pctx.beginPath();
+    pctx.moveTo(cx,cy);
+    const spread=0.04;
+    pctx.lineTo(cx+Math.cos(a-spread)*pW*1.5,cy+Math.sin(a-spread)*pH*1.5);
+    pctx.lineTo(cx+Math.cos(a+spread)*pW*1.5,cy+Math.sin(a+spread)*pH*1.5);
+    pctx.closePath();
+    pctx.fillStyle=grad;pctx.fill();
+  }
+
+  // Pulsar rings
+  for(let r=0;r<4;r++){
+    const phase=((pFrame*0.012)+r*0.25)%1;
+    const radius=phase*Math.min(pW,pH)*0.5;
+    const op=(1-phase)*0.15;
+    pctx.beginPath();pctx.arc(cx,cy,radius,0,Math.PI*2);
+    pctx.strokeStyle=`rgba(232,230,223,${op})`;pctx.lineWidth=1;pctx.stroke();
+  }
+
+  // Core
+  pctx.beginPath();pctx.arc(cx,cy,4,0,Math.PI*2);
+  pctx.fillStyle='rgba(232,230,223,0.9)';pctx.fill();
+
+  pFrame++;
+  requestAnimationFrame(drawPulsar);
+}
+drawPulsar();
+
+// SOLAR SYSTEM
+const sc=document.getElementById('solarCanvas');
+const sctx=sc.getContext('2d');
+let sW,sH;
+function resizeS(){sW=sc.width=sc.offsetWidth;sH=sc.height=sc.offsetHeight;}
+resizeS();
+window.addEventListener('resize',resizeS);
+
+const planets=[
+  {label:'operational optimization',orbit:0.24,speed:0.006,angle:0.5,size:3.5},
+  {label:'architecture',orbit:0.34,speed:0.004,angle:2.2,size:4},
+  {label:'automation',orbit:0.44,speed:0.003,angle:4.0,size:3},
+  {label:'e-commerce',orbit:0.54,speed:0.002,angle:1.2,size:5},
+  {label:'systems thinking',orbit:0.64,speed:0.0015,angle:3.5,size:3.5},
+  {label:'pattern recognition',orbit:0.74,speed:0.001,angle:0.8,size:2.5},
+];
+
+let sFrame=0;
+function drawSolar(){
+  sctx.fillStyle='rgba(0,0,0,0.25)';
+  sctx.fillRect(0,0,sW,sH);
+  const cx=sW/2,cy=sH/2;
+  const base=Math.min(sW,sH)*0.5;
+
+  // Orbit rings
+  planets.forEach(p=>{
+    sctx.beginPath();sctx.arc(cx,cy,p.orbit*base,0,Math.PI*2);
+    sctx.strokeStyle='rgba(232,230,223,0.05)';sctx.lineWidth=0.5;sctx.stroke();
+  });
+
+  // Sun glow
+  const sunGlow=sctx.createRadialGradient(cx,cy,0,cx,cy,28);
+  sunGlow.addColorStop(0,'rgba(255,240,180,0.9)');
+  sunGlow.addColorStop(0.4,'rgba(255,200,80,0.3)');
+  sunGlow.addColorStop(1,'rgba(255,150,0,0)');
+  sctx.beginPath();sctx.arc(cx,cy,28,0,Math.PI*2);
+  sctx.fillStyle=sunGlow;sctx.fill();
+
+  // Sun core
+  sctx.beginPath();sctx.arc(cx,cy,7,0,Math.PI*2);
+  sctx.fillStyle='rgba(255,240,180,1)';sctx.fill();
+
+  // Planets
+  planets.forEach(p=>{
+    p.angle+=p.speed;
+    const r=p.orbit*base;
+    const x=cx+Math.cos(p.angle)*r;
+    const y=cy+Math.sin(p.angle)*r;
+
+    // Planet glow
+    const pg=sctx.createRadialGradient(x,y,0,x,y,p.size*3);
+    pg.addColorStop(0,'rgba(232,230,223,0.4)');
+    pg.addColorStop(1,'rgba(232,230,223,0)');
+    sctx.beginPath();sctx.arc(x,y,p.size*3,0,Math.PI*2);
+    sctx.fillStyle=pg;sctx.fill();
+
+    // Planet
+    sctx.beginPath();sctx.arc(x,y,p.size,0,Math.PI*2);
+    sctx.fillStyle='rgba(232,230,223,0.85)';sctx.fill();
+
+    // Label
+    const side=x>cx?1:-1;
+    sctx.font=`11px Inter`;
+    sctx.fillStyle='rgba(232,230,223,0.5)';
+    sctx.textAlign=side>0?'left':'right';
+    sctx.fillText(p.label,x+side*(p.size+6),y+4);
+  });
+
+  sFrame++;
+  requestAnimationFrame(drawSolar);
+}
+drawSolar();
+</script>
 </body>
 </html>
