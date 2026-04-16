@@ -5,179 +5,62 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>nulpunkt</title>
 <style>
-  @import url('https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Inter:wght@300;400;700;900&display=swap');
-  * { box-sizing: border-box; margin: 0; padding: 0; }
-  html { scroll-behavior: smooth; }
-  body { background: #000; color: #f0f0f0; font-family: 'Inter', sans-serif; overflow-x: hidden; }
+@import url('https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Inter:wght@300;400;700;900&display=swap');
+*{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{background:#000;color:#f0f0f0;font-family:'Inter',sans-serif;overflow-x:hidden;}
 
-  nav {
-    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
-    display: flex; justify-content: space-between; align-items: center;
-    padding: 1.75rem 2.5rem;
-  }
-  .logo { font-family: 'Space Mono', monospace; font-size: 0.95rem; font-weight: 700; letter-spacing: 0.1em; color: #fff; text-decoration: none; }
-  nav ul { list-style: none; display: flex; gap: 2rem; }
-  nav ul a { color: rgba(255,255,255,0.5); text-decoration: none; font-size: 0.75rem; letter-spacing: 0.12em; text-transform: uppercase; transition: color 0.2s; }
-  nav ul a:hover { color: #fff; }
+nav{position:fixed;top:0;left:0;right:0;z-index:200;display:flex;justify-content:space-between;align-items:center;padding:1.75rem 2.5rem;mix-blend-mode:difference;}
+.logo{font-family:'Space Mono',monospace;font-size:0.95rem;font-weight:700;letter-spacing:0.1em;color:#fff;text-decoration:none;}
+nav ul{list-style:none;display:flex;gap:2rem;}
+nav ul a{color:rgba(255,255,255,0.5);text-decoration:none;font-size:0.75rem;letter-spacing:0.12em;text-transform:uppercase;transition:color 0.2s;}
+nav ul a:hover{color:#fff;}
 
-  .hero {
-    position: relative; height: 100vh; overflow: hidden; background: #000;
-    display: flex; align-items: flex-start;
-  }
+/* CANVAS HERO */
+#hero{position:relative;height:100vh;overflow:hidden;background:#000;}
+#c{position:absolute;inset:0;width:100%;height:100%;}
 
-  .earth-wrap {
-    position: absolute;
-    bottom: -30vh;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 130vw;
-    height: 130vw;
-    border-radius: 50%;
-    will-change: transform;
-  }
+.hero-ui{position:absolute;z-index:10;top:50%;left:50%;transform:translate(-50%,-50%);text-align:center;pointer-events:none;}
+.hero-name{font-family:'Space Mono',monospace;font-size:clamp(3rem,8vw,7rem);font-weight:700;letter-spacing:0.15em;color:#fff;line-height:1;mix-blend-mode:difference;}
+.hero-tagline{font-size:clamp(0.65rem,1.2vw,0.8rem);letter-spacing:0.35em;text-transform:uppercase;color:rgba(255,255,255,0.35);margin-top:1rem;}
 
-  .earth-sphere {
-    width: 100%; height: 100%;
-    border-radius: 50%;
-    background:
-      radial-gradient(ellipse at 30% 35%, rgba(40,120,220,0.95) 0%, transparent 45%),
-      radial-gradient(ellipse at 65% 55%, rgba(15,60,160,0.85) 0%, transparent 40%),
-      radial-gradient(ellipse at 50% 50%, #1a4a8a 0%, #0a2040 55%, #040d1a 100%);
-    position: relative;
-    overflow: hidden;
-  }
+.scroll-cue{position:absolute;bottom:2rem;left:50%;transform:translateX(-50%);z-index:10;font-size:0.65rem;letter-spacing:0.25em;text-transform:uppercase;color:rgba(255,255,255,0.2);animation:blink 2.5s infinite;}
+@keyframes blink{0%,100%{opacity:0.2}50%{opacity:0.6}}
 
-  .earth-sphere::before {
-    content: '';
-    position: absolute; inset: 0;
-    border-radius: 50%;
-    background:
-      radial-gradient(ellipse at 28% 42%, rgba(34,139,34,0.55) 0%, transparent 18%),
-      radial-gradient(ellipse at 58% 38%, rgba(139,90,43,0.3) 0%, transparent 14%),
-      radial-gradient(ellipse at 18% 62%, rgba(34,139,34,0.45) 0%, transparent 16%),
-      radial-gradient(ellipse at 72% 65%, rgba(34,139,34,0.35) 0%, transparent 14%),
-      radial-gradient(ellipse at 42% 28%, rgba(255,255,255,0.25) 0%, transparent 12%),
-      radial-gradient(ellipse at 80% 30%, rgba(255,255,255,0.15) 0%, transparent 10%),
-      radial-gradient(ellipse at 35% 75%, rgba(20,80,160,0.6) 0%, transparent 20%),
-      radial-gradient(ellipse at 62% 20%, rgba(255,255,255,0.2) 0%, transparent 8%);
-  }
+/* TRANSITION */
+.transition-band{height:25vh;background:linear-gradient(to bottom,#000 0%,#fff 100%);}
 
-  .earth-sphere::after {
-    content: '';
-    position: absolute; inset: 0; border-radius: 50%;
-    background: radial-gradient(ellipse at 32% 30%, rgba(255,255,255,0.06) 0%, transparent 45%);
-  }
+/* SECTIONS */
+.sections{background:#fff;color:#000;}
+.section{display:grid;grid-template-columns:1fr 1fr;align-items:center;padding:4.5rem 2.5rem;border-bottom:1px solid rgba(0,0,0,0.08);}
+.section-title{font-size:clamp(3rem,7vw,6rem);font-weight:900;letter-spacing:-0.02em;line-height:1;}
+.section-content{font-size:0.9rem;line-height:1.8;color:#444;text-align:right;}
+.skills-list{display:flex;justify-content:flex-end;gap:0.75rem;align-items:center;flex-wrap:wrap;}
+.skills-list span{font-size:0.85rem;color:#555;}
+.dot{color:#ccc;}
 
-  .atmosphere {
-    position: absolute;
-    inset: -3%;
-    border-radius: 50%;
-    background: radial-gradient(ellipse at 50% 50%, transparent 48%, rgba(30,90,220,0.12) 60%, rgba(10,50,180,0.25) 72%, rgba(5,20,80,0.5) 84%, transparent 92%);
-    pointer-events: none;
-  }
+.contact-section{padding:4.5rem 2.5rem;background:#fff;}
+.contact-section .section-title{margin-bottom:2.5rem;}
+.contact-grid{display:grid;grid-template-columns:1fr 1fr;gap:0.75rem;margin-bottom:0.75rem;}
+.full{grid-column:1/-1;}
+input,textarea{width:100%;padding:1rem 1.25rem;border:1px solid rgba(0,0,0,0.12);background:transparent;font-family:'Inter',sans-serif;font-size:0.85rem;color:#000;outline:none;transition:border-color 0.2s;resize:none;border-radius:0;}
+input::placeholder,textarea::placeholder{color:#bbb;}
+input:focus,textarea:focus{border-color:#000;}
+textarea{height:150px;}
+.btn{width:100%;padding:1rem;background:#000;color:#fff;border:none;font-family:'Inter',sans-serif;font-size:0.8rem;letter-spacing:0.1em;cursor:pointer;transition:opacity 0.2s;margin-top:0.5rem;}
+.btn:hover{opacity:0.75;}
 
-  .earth-top-fade {
-    position: absolute;
-    top: 0; left: 0; right: 0;
-    height: 35vh;
-    background: linear-gradient(to bottom, #000 0%, transparent 100%);
-    z-index: 2;
-    pointer-events: none;
-  }
+footer{background:#000;color:rgba(255,255,255,0.2);padding:1.75rem 2.5rem;font-size:0.7rem;letter-spacing:0.08em;display:flex;justify-content:space-between;}
 
-  .hero-content {
-    position: relative; z-index: 10;
-    padding: 7rem 2.5rem 0;
-  }
-
-  .hero-logo {
-    font-family: 'Space Mono', monospace;
-    font-size: clamp(1.2rem, 2.5vw, 1.6rem);
-    font-weight: 700;
-    letter-spacing: 0.1em;
-    color: #fff;
-    margin-bottom: 1.5rem;
-  }
-
-  .hero-tagline {
-    font-size: clamp(0.75rem, 1.2vw, 0.9rem);
-    color: rgba(255,255,255,0.45);
-    letter-spacing: 0.05em;
-    line-height: 1.6;
-    max-width: 320px;
-  }
-
-  .scroll-hint {
-    position: absolute; bottom: 2.5rem; left: 2.5rem; z-index: 10;
-    font-size: 0.65rem; letter-spacing: 0.2em; text-transform: uppercase;
-    color: rgba(255,255,255,0.25);
-    animation: pulse 2.5s infinite;
-  }
-  @keyframes pulse { 0%,100%{opacity:0.25} 50%{opacity:0.6} }
-
-  /* SECTIONS */
-  .sections { background: #fff; color: #000; position: relative; z-index: 10; }
-
-  .section {
-    display: grid; grid-template-columns: 1fr 1fr;
-    align-items: center; padding: 4rem 2.5rem;
-    border-bottom: 1px solid rgba(0,0,0,0.1);
-  }
-
-  .section-title {
-    font-size: clamp(3rem, 7vw, 6rem);
-    font-weight: 900; letter-spacing: -0.02em; line-height: 1;
-  }
-
-  .section-content {
-    font-size: 0.9rem; line-height: 1.75; color: #444; text-align: right;
-  }
-
-  .skills-list { display: flex; justify-content: flex-end; align-items: center; gap: 0.75rem; flex-wrap: wrap; }
-  .skills-list span { font-size: 0.85rem; color: #555; }
-  .skills-list .dot { color: #ccc; }
-
-  .contact-section { padding: 4rem 2.5rem; background: #fff; }
-  .contact-section .section-title { margin-bottom: 2.5rem; }
-
-  .contact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem; margin-bottom: 0.75rem; }
-  .contact-full { grid-column: 1 / -1; }
-
-  input, textarea {
-    width: 100%; padding: 1rem 1.25rem;
-    border: 1px solid rgba(0,0,0,0.12); border-radius: 0;
-    background: transparent; font-family: 'Inter', sans-serif;
-    font-size: 0.85rem; color: #000; outline: none;
-    transition: border-color 0.2s; resize: none;
-  }
-  input::placeholder, textarea::placeholder { color: #bbb; }
-  input:focus, textarea:focus { border-color: #000; }
-  textarea { height: 150px; }
-
-  .submit-btn {
-    width: 100%; padding: 1rem; background: #000; color: #fff;
-    border: none; font-family: 'Inter', sans-serif;
-    font-size: 0.8rem; letter-spacing: 0.1em;
-    cursor: pointer; transition: opacity 0.2s;
-  }
-  .submit-btn:hover { opacity: 0.75; }
-
-  footer {
-    background: #000; color: rgba(255,255,255,0.25);
-    padding: 1.75rem 2.5rem; font-size: 0.7rem; letter-spacing: 0.08em;
-    display: flex; justify-content: space-between;
-  }
-
-  @media (max-width: 700px) {
-    nav ul { display: none; }
-    .earth-wrap { width: 200vw; height: 200vw; bottom: -20vh; }
-    .section { grid-template-columns: 1fr; padding: 3rem 1.5rem; }
-    .section-content { text-align: left; margin-top: 1rem; }
-    .skills-list { justify-content: flex-start; }
-    .contact-section { padding: 3rem 1.5rem; }
-    .contact-grid { grid-template-columns: 1fr; }
-    footer { flex-direction: column; gap: 0.5rem; }
-  }
+@media(max-width:700px){
+  nav ul{display:none;}
+  .section{grid-template-columns:1fr;padding:3rem 1.5rem;}
+  .section-content{text-align:left;margin-top:1rem;}
+  .skills-list{justify-content:flex-start;}
+  .contact-section{padding:3rem 1.5rem;}
+  .contact-grid{grid-template-columns:1fr;}
+  footer{flex-direction:column;gap:0.5rem;}
+}
 </style>
 </head>
 <body>
@@ -192,19 +75,16 @@
   </ul>
 </nav>
 
-<section class="hero">
-  <div class="earth-wrap" id="earthWrap">
-    <div class="earth-sphere">
-      <div class="atmosphere"></div>
-    </div>
+<section id="hero">
+  <canvas id="c"></canvas>
+  <div class="hero-ui">
+    <div class="hero-name">nulpunkt</div>
+    <div class="hero-tagline">finding the zero point</div>
   </div>
-  <div class="earth-top-fade"></div>
-  <div class="hero-content">
-    <div class="hero-logo">nulpunkt</div>
-    <div class="hero-tagline">finding patterns in complex systems<br>within e-commerce</div>
-  </div>
-  <div class="scroll-hint">scroll</div>
+  <div class="scroll-cue">scroll</div>
 </section>
+
+<div class="transition-band"></div>
 
 <div class="sections">
   <div class="section" id="about">
@@ -230,10 +110,10 @@
     <div class="contact-grid">
       <input type="text" placeholder="name">
       <input type="email" placeholder="email">
-      <input type="tel" placeholder="phone number" class="contact-full">
-      <textarea placeholder="message" class="contact-full"></textarea>
+      <input type="tel" placeholder="phone number" class="full">
+      <textarea placeholder="message" class="full"></textarea>
     </div>
-    <button class="submit-btn">submit</button>
+    <button class="btn">submit</button>
   </div>
 </div>
 
@@ -243,16 +123,145 @@
 </footer>
 
 <script>
-  const wrap = document.getElementById('earthWrap');
-  const hero = document.querySelector('.hero');
+const canvas = document.getElementById('c');
+const ctx = canvas.getContext('2d');
+let W, H, mouse = {x:0,y:0}, particles = [], frame = 0;
 
-  window.addEventListener('scroll', () => {
-    const p = Math.min(window.scrollY / window.innerHeight, 1);
-    const scale = 1 + p * 1.8;
-    const moveUp = p * 20;
-    wrap.style.transform = `translateX(-50%) translateY(calc(-${moveUp}vh)) scale(${scale})`;
-    hero.style.opacity = p > 0.7 ? 1 - ((p - 0.7) / 0.3) : 1;
+function resize(){
+  W = canvas.width = canvas.offsetWidth;
+  H = canvas.height = canvas.offsetHeight;
+}
+resize();
+window.addEventListener('resize', resize);
+
+class Particle {
+  constructor(){this.reset(true);}
+  reset(init){
+    this.x = Math.random()*W;
+    this.y = init ? Math.random()*H : H + 10;
+    this.r = Math.random()*1.2 + 0.3;
+    this.speed = Math.random()*0.3 + 0.05;
+    this.opacity = Math.random()*0.6 + 0.1;
+    this.drift = (Math.random()-0.5)*0.15;
+    this.twinkle = Math.random()*Math.PI*2;
+    this.twinkleSpeed = Math.random()*0.02 + 0.005;
+  }
+  update(){
+    this.y -= this.speed;
+    this.x += this.drift;
+    this.twinkle += this.twinkleSpeed;
+    if(this.y < -5) this.reset(false);
+  }
+  draw(){
+    const op = this.opacity * (0.7 + 0.3*Math.sin(this.twinkle));
+    ctx.beginPath();
+    ctx.arc(this.x, this.y, this.r, 0, Math.PI*2);
+    ctx.fillStyle = `rgba(255,255,255,${op})`;
+    ctx.fill();
+  }
+}
+
+for(let i=0;i<280;i++) particles.push(new Particle());
+
+class GridLine {
+  constructor(i, total, axis){
+    this.axis = axis;
+    this.pos = axis==='x' ? (i/total)*W : (i/total)*H;
+    this.opacity = 0;
+    this.targetOpacity = Math.random()*0.07 + 0.02;
+    this.speed = Math.random()*0.002 + 0.001;
+  }
+  update(){
+    this.opacity += (this.targetOpacity - this.opacity) * this.speed * 10;
+  }
+  draw(){
+    ctx.strokeStyle = `rgba(255,255,255,${this.opacity})`;
+    ctx.lineWidth = 0.5;
+    ctx.beginPath();
+    if(this.axis==='x'){
+      ctx.moveTo(this.pos,0);
+      ctx.lineTo(this.pos,H);
+    } else {
+      ctx.moveTo(0,this.pos);
+      ctx.lineTo(W,this.pos);
+    }
+    ctx.stroke();
+  }
+}
+
+const gridX=[], gridY=[];
+for(let i=0;i<20;i++) gridX.push(new GridLine(i,20,'x'));
+for(let i=0;i<12;i++) gridY.push(new GridLine(i,12,'y'));
+
+// Axis lines — the nulpunkt zero point
+const AXIS = {x: W/2, y: H/2};
+
+function drawAxes(){
+  const cx = W/2 + (mouse.x - W/2)*0.02;
+  const cy = H/2 + (mouse.y - H/2)*0.02;
+  ctx.strokeStyle = 'rgba(255,255,255,0.18)';
+  ctx.lineWidth = 1;
+  ctx.setLineDash([4,8]);
+  ctx.beginPath(); ctx.moveTo(cx,0); ctx.lineTo(cx,H); ctx.stroke();
+  ctx.beginPath(); ctx.moveTo(0,cy); ctx.lineTo(W,cy); ctx.stroke();
+  ctx.setLineDash([]);
+
+  // Origin dot
+  ctx.beginPath();
+  ctx.arc(cx,cy,2.5,0,Math.PI*2);
+  ctx.fillStyle='rgba(255,255,255,0.5)';
+  ctx.fill();
+
+  // Ripple rings from origin
+  const rings = 3;
+  for(let r=0;r<rings;r++){
+    const phase = (frame*0.008 + r/rings) % 1;
+    const radius = phase * Math.min(W,H) * 0.45;
+    const op = (1-phase)*0.06;
+    ctx.beginPath();
+    ctx.arc(cx,cy,radius,0,Math.PI*2);
+    ctx.strokeStyle=`rgba(255,255,255,${op})`;
+    ctx.lineWidth=1;
+    ctx.stroke();
+  }
+}
+
+function drawNebula(){
+  // Deep space color blobs — very subtle
+  const blobs = [
+    {x:W*0.2, y:H*0.3, r:W*0.35, c:'rgba(20,40,120,0.12)'},
+    {x:W*0.8, y:H*0.7, r:W*0.3, c:'rgba(60,10,80,0.1)'},
+    {x:W*0.5, y:H*0.5, r:W*0.4, c:'rgba(0,20,60,0.08)'},
+  ];
+  blobs.forEach(b=>{
+    const g = ctx.createRadialGradient(b.x,b.y,0,b.x,b.y,b.r);
+    g.addColorStop(0,b.c);
+    g.addColorStop(1,'transparent');
+    ctx.fillStyle=g;
+    ctx.beginPath();
+    ctx.arc(b.x,b.y,b.r,0,Math.PI*2);
+    ctx.fill();
   });
+}
+
+window.addEventListener('mousemove',e=>{
+  mouse.x=e.clientX; mouse.y=e.clientY;
+});
+
+function loop(){
+  frame++;
+  ctx.fillStyle='rgba(0,0,0,0.25)';
+  ctx.fillRect(0,0,W,H);
+
+  drawNebula();
+  gridX.forEach(g=>{g.update();g.draw();});
+  gridY.forEach(g=>{g.update();g.draw();});
+  particles.forEach(p=>{p.update();p.draw();});
+  drawAxes();
+
+  requestAnimationFrame(loop);
+}
+loop();
 </script>
 </body>
 </html>
