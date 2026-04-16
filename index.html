@@ -10,51 +10,51 @@
 html,body{width:100%;height:100%;overflow:hidden;background:#000;color:#fff;font-family:'Inter',sans-serif;}
 canvas{position:fixed;inset:0;z-index:0;}
 
-/* INTRO OVERLAY */
-#intro{position:fixed;inset:0;z-index:100;display:flex;align-items:center;justify-content:center;cursor:none;}
-#intro-text{font-family:'Space Mono',monospace;font-size:clamp(4rem,12vw,10rem);font-weight:700;letter-spacing:0.1em;color:#fff;mix-blend-mode:difference;user-select:none;transition:opacity 0.5s;}
+#intro{position:fixed;inset:0;z-index:100;display:flex;align-items:center;justify-content:center;cursor:none;background:#000;}
+#intro-text{font-family:'Space Mono',monospace;font-size:clamp(4rem,12vw,10rem);font-weight:700;letter-spacing:0.1em;color:#fff;user-select:none;transition:opacity 0.5s;}
 
-/* CUSTOM CURSOR */
-#cur{position:fixed;width:12px;height:12px;border-radius:50%;background:#fff;pointer-events:none;z-index:9999;transform:translate(-50%,-50%);transition:transform 0.1s,width 0.2s,height 0.2s;}
-#cur2{position:fixed;width:40px;height:40px;border-radius:50%;border:1px solid rgba(255,255,255,0.4);pointer-events:none;z-index:9998;transform:translate(-50%,-50%);transition:all 0.12s;}
+#cur{position:fixed;width:12px;height:12px;border-radius:50%;background:#fff;pointer-events:none;z-index:9999;transform:translate(-50%,-50%);mix-blend-mode:difference;}
+#cur2{position:fixed;width:40px;height:40px;border-radius:50%;border:1px solid rgba(255,255,255,0.4);pointer-events:none;z-index:9998;transform:translate(-50%,-50%);mix-blend-mode:difference;transition:all 0.12s;}
 
-/* PANELS — horizontal scroll */
+/* NAV */
+nav{position:fixed;top:0;left:0;right:0;z-index:200;display:flex;justify-content:space-between;align-items:center;padding:1.25rem 2rem;background:rgba(0,0,0,0.5);backdrop-filter:blur(12px);border-bottom:0.5px solid rgba(255,255,255,0.07);}
+.logo{font-family:'Space Mono',monospace;font-size:0.85rem;font-weight:700;letter-spacing:0.1em;color:#fff;text-decoration:none;}
+nav ul{list-style:none;display:flex;gap:0.25rem;}
+nav ul a{display:block;padding:0.4rem 0.85rem;font-size:0.65rem;letter-spacing:0.12em;text-transform:uppercase;color:rgba(255,255,255,0.4);text-decoration:none;border:0.5px solid transparent;border-radius:4px;transition:all .15s;}
+nav ul a:hover{color:#fff;border-color:rgba(255,255,255,0.15);background:rgba(255,255,255,0.06);}
+
 #panels{position:fixed;inset:0;z-index:10;display:flex;width:500vw;transition:transform 0.9s cubic-bezier(0.77,0,0.175,1);}
 .panel{width:100vw;height:100vh;flex-shrink:0;display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden;}
 
-/* NAV DOTS */
 #dots{position:fixed;right:2rem;top:50%;transform:translateY(-50%);z-index:50;display:flex;flex-direction:column;gap:10px;}
 .dot{width:6px;height:6px;border-radius:50%;background:rgba(255,255,255,0.25);cursor:pointer;transition:all 0.3s;}
 .dot.active{background:#fff;transform:scale(1.4);}
 
-/* PANEL 0 — HERO */
-#p0 .big{font-family:'Space Mono',monospace;font-size:clamp(5rem,15vw,14rem);font-weight:700;line-height:0.85;letter-spacing:-0.02em;color:#fff;mix-blend-mode:difference;position:relative;z-index:2;}
-#p0 .sub{position:absolute;bottom:3rem;left:3rem;font-size:0.7rem;letter-spacing:0.3em;text-transform:uppercase;color:rgba(255,255,255,0.3);}
-#p0 .nav-hint{position:absolute;bottom:3rem;right:3rem;font-size:0.7rem;letter-spacing:0.2em;color:rgba(255,255,255,0.2);animation:blink 2s infinite;}
-@keyframes blink{0%,100%{opacity:0.2}50%{opacity:0.7}}
+/* P0 — PULSAR HERO */
+#p0 canvas{position:absolute;inset:0;width:100%;height:100%;}
+#p0 .sub{position:absolute;bottom:3rem;left:3rem;font-size:0.7rem;letter-spacing:0.3em;text-transform:uppercase;color:rgba(255,255,255,0.25);z-index:2;}
+#p0 .nav-hint{position:absolute;bottom:3rem;right:3rem;font-size:0.7rem;letter-spacing:0.2em;color:rgba(255,255,255,0.15);animation:blink 2s infinite;z-index:2;}
+@keyframes blink{0%,100%{opacity:0.15}50%{opacity:0.5}}
 
-/* PANEL 1 — ABOUT: text scramble reveal */
+/* P1 — ABOUT */
 #p1{background:#fff;color:#000;}
 #p1 .about-word{font-size:clamp(1.5rem,4vw,3.5rem);font-weight:900;line-height:1.1;max-width:700px;padding:3rem;}
 #p1 .about-word span{display:inline-block;opacity:0;transform:translateY(30px);transition:all 0.6s;}
 #p1 .label{position:absolute;top:3rem;left:3rem;font-size:0.7rem;letter-spacing:0.3em;text-transform:uppercase;color:#999;}
 
-/* PANEL 2 — SKILLS: radial */
+/* P2 — SKILLS SOLAR */
 #p2{background:#000;}
 #p2 canvas{position:absolute;inset:0;width:100%;height:100%;}
-#p2 .center-label{position:absolute;text-align:center;font-family:'Space Mono',monospace;}
-#p2 .center-label h2{font-size:clamp(2rem,5vw,4rem);font-weight:700;color:#fff;}
-#p2 .center-label p{font-size:0.7rem;letter-spacing:0.3em;color:rgba(255,255,255,0.3);margin-top:0.5rem;text-transform:uppercase;}
+#p2 .skills-label{position:absolute;top:3rem;left:3rem;font-size:0.7rem;letter-spacing:0.3em;text-transform:uppercase;color:rgba(255,255,255,0.3);z-index:2;}
 
-/* PANEL 3 — PRICING */
+/* P3 — PRICING */
 #p3{background:#000;}
 #p3 .price-wrap{position:relative;z-index:2;text-align:center;}
-#p3 .price-word{font-family:'Space Mono',monospace;font-size:clamp(4rem,12vw,10rem);font-weight:700;letter-spacing:0.1em;color:transparent;-webkit-text-stroke:1px rgba(255,255,255,0.3);transition:all 0.3s;cursor:default;}
-#p3 .price-word:hover{-webkit-text-stroke:1px #fff;color:#fff;text-shadow:0 0 60px rgba(255,255,255,0.4);}
-#p3 .price-sub{font-size:0.7rem;letter-spacing:0.3em;color:rgba(255,255,255,0.2);margin-top:1rem;text-transform:uppercase;}
+#p3 .price-word{font-family:'Space Mono',monospace;font-size:clamp(4rem,12vw,10rem);font-weight:700;letter-spacing:0.1em;color:transparent;-webkit-text-stroke:1px rgba(255,255,255,0.25);transition:all 0.3s;cursor:default;}
+#p3 .price-word:hover{-webkit-text-stroke:1px #fff;color:#fff;text-shadow:0 0 80px rgba(255,255,255,0.3);}
 #p3 .label{position:absolute;top:3rem;left:3rem;font-size:0.7rem;letter-spacing:0.3em;text-transform:uppercase;color:rgba(255,255,255,0.3);}
 
-/* PANEL 4 — CONTACT */
+/* P4 — CONTACT */
 #p4{background:#fff;color:#000;align-items:stretch;}
 #p4 .contact-inner{display:grid;grid-template-columns:1fr 1fr;width:100%;height:100%;}
 #p4 .contact-left{display:flex;align-items:flex-end;padding:3rem;border-right:1px solid rgba(0,0,0,0.1);}
@@ -67,8 +67,8 @@ textarea{height:100px;}
 .btn{padding:1rem;background:#000;color:#fff;border:none;font-family:'Inter',sans-serif;font-size:0.8rem;letter-spacing:0.15em;cursor:pointer;text-transform:lowercase;}
 .btn:hover{opacity:0.7;}
 
-/* MOBILE */
 @media(max-width:700px){
+  nav ul{display:none;}
   #p4 .contact-inner{grid-template-columns:1fr;overflow-y:auto;}
   #p4 .contact-left{align-items:flex-start;border-right:none;border-bottom:1px solid rgba(0,0,0,0.1);padding:2rem;}
   #p4 .contact-right{padding:2rem;}
@@ -84,30 +84,41 @@ textarea{height:100px;}
 
 <div id="intro"><div id="intro-text">nulpunkt</div></div>
 
+<nav>
+  <a href="#" class="logo" onclick="goTo(0);return false;">nulpunkt</a>
+  <ul>
+    <li><a href="#" onclick="goTo(1);return false;">about</a></li>
+    <li><a href="#" onclick="goTo(2);return false;">skills</a></li>
+    <li><a href="#" onclick="goTo(3);return false;">pricing</a></li>
+    <li><a href="#" onclick="goTo(4);return false;">contact</a></li>
+  </ul>
+</nav>
+
 <div id="panels">
+
   <div class="panel" id="p0">
-    <div class="big">nul<br>punkt</div>
-    <div class="sub">e-commerce · architecture · systems</div>
-    <div class="nav-hint">→ scroll or drag</div>
+    <canvas id="pulsarCanvas"></canvas>
+    <div class="sub">nulpunkt · finding the zero point</div>
+    <div class="nav-hint">→ scroll or use arrow keys</div>
   </div>
+
   <div class="panel" id="p1">
     <div class="label">about</div>
     <div class="about-word" id="aboutText"></div>
   </div>
+
   <div class="panel" id="p2">
     <canvas id="skillCanvas"></canvas>
-    <div class="center-label">
-      <h2>SKILLS</h2>
-      <p>orbit the zero point</p>
-    </div>
+    <div class="skills-label">skills</div>
   </div>
+
   <div class="panel" id="p3">
     <div class="label">pricing</div>
     <div class="price-wrap">
       <div class="price-word">expensive</div>
-      <div class="price-sub">worth every bit of it</div>
     </div>
   </div>
+
   <div class="panel" id="p4">
     <div class="contact-inner">
       <div class="contact-left"><h2>CON<br>TACT</h2></div>
@@ -120,6 +131,7 @@ textarea{height:100px;}
       </div>
     </div>
   </div>
+
 </div>
 
 <div id="dots">
@@ -132,161 +144,175 @@ textarea{height:100px;}
 
 <script>
 // CURSOR
-const cur=document.getElementById('cur'), cur2=document.getElementById('cur2');
+const cur=document.getElementById('cur'),cur2=document.getElementById('cur2');
 let mx=0,my=0,cx=0,cy=0;
-document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY;cur.style.left=mx+'px';cur.style.top=my+'px';});
+document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY;cur.style.left=mx+'px';cur.style.top=my+'px';},{passive:true});
 setInterval(()=>{cx+=(mx-cx)*0.15;cy+=(my-cy)*0.15;cur2.style.left=cx+'px';cur2.style.top=cy+'px';},16);
 
-// BG CANVAS — particle field
+// BG STARS
 const bg=document.getElementById('bg');
 const bctx=bg.getContext('2d');
-let bW,bH,stars=[],frame=0;
+let bW,bH;
 function resizeBg(){bW=bg.width=window.innerWidth;bH=bg.height=window.innerHeight;}
 resizeBg();window.addEventListener('resize',resizeBg);
+const stars=[];
 for(let i=0;i<400;i++)stars.push({x:Math.random()*5000,y:Math.random()*3000,r:Math.random()*1.2+0.2,o:Math.random(),s:Math.random()*0.01+0.003});
 function drawBg(){
-  bctx.fillStyle='rgba(0,0,0,0.2)';
-  bctx.fillRect(0,0,bW,bH);
+  bctx.fillStyle='rgba(0,0,0,0.2)';bctx.fillRect(0,0,bW,bH);
   stars.forEach(s=>{
     s.o+=s.s;
     const op=0.2+0.5*Math.abs(Math.sin(s.o));
-    bctx.beginPath();
-    bctx.arc((s.x%bW),(s.y%bH),s.r,0,Math.PI*2);
-    bctx.fillStyle=`rgba(255,255,255,${op})`;
-    bctx.fill();
+    bctx.beginPath();bctx.arc(s.x%bW,s.y%bH,s.r,0,Math.PI*2);
+    bctx.fillStyle=`rgba(255,255,255,${op})`;bctx.fill();
   });
-  frame++;
   requestAnimationFrame(drawBg);
 }
 drawBg();
 
+// PULSAR
+const pc=document.getElementById('pulsarCanvas');
+const pctx=pc.getContext('2d');
+let pW,pH,pFrame=0;
+function resizeP(){pW=pc.width=pc.offsetWidth;pH=pc.height=pc.offsetHeight;}
+resizeP();window.addEventListener('resize',resizeP);
+function drawPulsar(){
+  pctx.fillStyle='rgba(0,0,0,0.18)';pctx.fillRect(0,0,pW,pH);
+  const cx=pW/2,cy=pH/2;
+  const beamAngle=pFrame*0.016;
+  for(let b=0;b<2;b++){
+    const a=beamAngle+b*Math.PI;
+    const grad=pctx.createLinearGradient(cx,cy,cx+Math.cos(a)*pW,cy+Math.sin(a)*pH);
+    grad.addColorStop(0,'rgba(255,255,255,0.3)');
+    grad.addColorStop(0.5,'rgba(255,255,255,0.06)');
+    grad.addColorStop(1,'rgba(255,255,255,0)');
+    pctx.beginPath();pctx.moveTo(cx,cy);
+    const sp=0.035;
+    pctx.lineTo(cx+Math.cos(a-sp)*pW*2,cy+Math.sin(a-sp)*pH*2);
+    pctx.lineTo(cx+Math.cos(a+sp)*pW*2,cy+Math.sin(a+sp)*pH*2);
+    pctx.closePath();pctx.fillStyle=grad;pctx.fill();
+  }
+  for(let r=0;r<5;r++){
+    const phase=((pFrame*0.01)+r*0.2)%1;
+    const radius=phase*Math.min(pW,pH)*0.55;
+    const op=(1-phase)*0.12;
+    pctx.beginPath();pctx.arc(cx,cy,radius,0,Math.PI*2);
+    pctx.strokeStyle=`rgba(255,255,255,${op})`;pctx.lineWidth=1;pctx.stroke();
+  }
+  // Core glow
+  const cg=pctx.createRadialGradient(cx,cy,0,cx,cy,20);
+  cg.addColorStop(0,'rgba(255,255,255,0.9)');
+  cg.addColorStop(0.4,'rgba(255,255,255,0.2)');
+  cg.addColorStop(1,'rgba(255,255,255,0)');
+  pctx.beginPath();pctx.arc(cx,cy,20,0,Math.PI*2);pctx.fillStyle=cg;pctx.fill();
+  pctx.beginPath();pctx.arc(cx,cy,3,0,Math.PI*2);pctx.fillStyle='#fff';pctx.fill();
+  pFrame++;requestAnimationFrame(drawPulsar);
+}
+drawPulsar();
+
 // INTRO
 const intro=document.getElementById('intro');
-const introText=document.getElementById('intro-text');
-let introGone=false;
 setTimeout(()=>{
-  introText.style.opacity='0';
-  setTimeout(()=>{intro.style.display='none';introGone=true;},500);
+  document.getElementById('intro-text').style.opacity='0';
+  setTimeout(()=>{intro.style.display='none';},500);
 },1800);
 
 // PANELS
-let current=0;
+let current=0,locked=false;
 const panels=document.getElementById('panels');
 const dots=document.querySelectorAll('.dot');
 function goTo(n){
   current=Math.max(0,Math.min(4,n));
   panels.style.transform=`translateX(-${current*100}vw)`;
   dots.forEach((d,i)=>d.classList.toggle('active',i===current));
-  if(current===1) revealAbout();
-  if(current===2) startSkills();
+  if(current===1)revealAbout();
+  if(current===2)startSkills();
 }
-
-// WHEEL / TOUCH
-let locked=false;
 window.addEventListener('wheel',e=>{
-  if(locked)return;
-  locked=true;
-  if(e.deltaY>30) goTo(current+1);
-  else if(e.deltaY<-30) goTo(current-1);
+  if(locked)return;locked=true;
+  if(e.deltaY>30)goTo(current+1);
+  else if(e.deltaY<-30)goTo(current-1);
   setTimeout(()=>locked=false,1000);
 },{passive:true});
-
 let tx=0;
 window.addEventListener('touchstart',e=>tx=e.touches[0].clientX,{passive:true});
 window.addEventListener('touchend',e=>{
   const dx=e.changedTouches[0].clientX-tx;
   if(Math.abs(dx)>50){dx<0?goTo(current+1):goTo(current-1);}
 },{passive:true});
+window.addEventListener('keydown',e=>{
+  if(e.key==='ArrowRight'||e.key==='ArrowDown')goTo(current+1);
+  if(e.key==='ArrowLeft'||e.key==='ArrowUp')goTo(current-1);
+});
 
-// ABOUT — word-by-word reveal
+// ABOUT
 const words='finding patterns in complex systems within e-commerce making them predictable and applicable'.split(' ');
 const aboutEl=document.getElementById('aboutText');
 words.forEach(w=>{const s=document.createElement('span');s.textContent=w+' ';aboutEl.appendChild(s);});
 let aboutDone=false;
 function revealAbout(){
   if(aboutDone)return;aboutDone=true;
-  const spans=aboutEl.querySelectorAll('span');
-  spans.forEach((s,i)=>setTimeout(()=>{s.style.opacity='1';s.style.transform='translateY(0)';},i*80));
+  aboutEl.querySelectorAll('span').forEach((s,i)=>setTimeout(()=>{s.style.opacity='1';s.style.transform='translateY(0)';},i*80));
 }
 
-// SKILLS — orbiting canvas
+// SOLAR SYSTEM
 const sc=document.getElementById('skillCanvas');
 const sctx=sc.getContext('2d');
 let sW,sH,skillsRunning=false;
 function resizeSc(){sW=sc.width=sc.offsetWidth;sH=sc.height=sc.offsetHeight;}
 resizeSc();window.addEventListener('resize',resizeSc);
-
-const skillData=[
-  {label:'operational optimization',orbit:0.28,speed:0.004,angle:0,size:14},
-  {label:'architecture',orbit:0.18,speed:0.007,angle:2.1,size:16},
-  {label:'automation',orbit:0.22,speed:-0.005,angle:4.2,size:15},
-  {label:'e-commerce',orbit:0.35,speed:0.003,angle:1.0,size:13},
-  {label:'systems thinking',orbit:0.38,speed:-0.004,angle:3.3,size:13},
-  {label:'pattern recognition',orbit:0.42,speed:0.002,angle:0.5,size:12},
+const planets=[
+  {label:'operational optimization',orbit:0.16,speed:0.008,angle:0.5,size:3.5,col:'rgba(255,255,255,0.9)'},
+  {label:'architecture',orbit:0.23,speed:0.005,angle:2.2,size:5,col:'rgba(255,255,255,0.85)'},
+  {label:'automation',orbit:0.30,speed:0.004,angle:4.0,size:4,col:'rgba(255,255,255,0.8)'},
+  {label:'e-commerce',orbit:0.38,speed:0.003,angle:1.2,size:6,col:'rgba(255,255,255,0.85)'},
+  {label:'systems thinking',orbit:0.45,speed:0.002,angle:3.5,size:3.5,col:'rgba(255,255,255,0.75)'},
+  {label:'pattern recognition',orbit:0.52,speed:0.0015,angle:0.8,size:3,col:'rgba(255,255,255,0.7)'},
 ];
-
-function drawSkills(){
+function drawSolar(){
   if(!skillsRunning)return;
   sctx.clearRect(0,0,sW,sH);
   const cx=sW/2,cy=sH/2;
+  const base=Math.min(sW,sH)*0.5;
 
-  // Rings
-  skillData.forEach(s=>{
-    sctx.beginPath();
-    sctx.arc(cx,cy,s.orbit*Math.min(sW,sH),0,Math.PI*2);
-    sctx.strokeStyle='rgba(255,255,255,0.04)';
-    sctx.lineWidth=1;
-    sctx.stroke();
+  // Orbit rings
+  planets.forEach(p=>{
+    sctx.beginPath();sctx.arc(cx,cy,p.orbit*base*2,0,Math.PI*2);
+    sctx.strokeStyle='rgba(255,255,255,0.05)';sctx.lineWidth=0.5;sctx.stroke();
   });
 
-  // Origin
-  sctx.beginPath();
-  sctx.arc(cx,cy,3,0,Math.PI*2);
-  sctx.fillStyle='rgba(255,255,255,0.6)';
-  sctx.fill();
+  // Sun glow
+  const sg=sctx.createRadialGradient(cx,cy,0,cx,cy,35);
+  sg.addColorStop(0,'rgba(255,240,160,1)');
+  sg.addColorStop(0.3,'rgba(255,200,60,0.5)');
+  sg.addColorStop(0.7,'rgba(255,140,0,0.15)');
+  sg.addColorStop(1,'rgba(255,100,0,0)');
+  sctx.beginPath();sctx.arc(cx,cy,35,0,Math.PI*2);sctx.fillStyle=sg;sctx.fill();
+  sctx.beginPath();sctx.arc(cx,cy,8,0,Math.PI*2);
+  sctx.fillStyle='rgba(255,245,180,1)';sctx.fill();
 
-  // Skill nodes
-  skillData.forEach(s=>{
-    s.angle+=s.speed;
-    const r=s.orbit*Math.min(sW,sH);
-    const x=cx+Math.cos(s.angle)*r;
-    const y=cy+Math.sin(s.angle)*r;
-
-    // Line to center
-    sctx.beginPath();
-    sctx.moveTo(cx,cy);
-    sctx.lineTo(x,y);
-    sctx.strokeStyle='rgba(255,255,255,0.06)';
-    sctx.lineWidth=0.5;
-    sctx.stroke();
-
-    // Dot
-    sctx.beginPath();
-    sctx.arc(x,y,3,0,Math.PI*2);
-    sctx.fillStyle='#fff';
-    sctx.fill();
-
+  // Planets
+  planets.forEach(p=>{
+    p.angle+=p.speed;
+    const r=p.orbit*base*2;
+    const x=cx+Math.cos(p.angle)*r;
+    const y=cy+Math.sin(p.angle)*r;
+    // Glow
+    const pg=sctx.createRadialGradient(x,y,0,x,y,p.size*3);
+    pg.addColorStop(0,'rgba(255,255,255,0.25)');pg.addColorStop(1,'rgba(255,255,255,0)');
+    sctx.beginPath();sctx.arc(x,y,p.size*3,0,Math.PI*2);sctx.fillStyle=pg;sctx.fill();
+    // Planet
+    sctx.beginPath();sctx.arc(x,y,p.size,0,Math.PI*2);sctx.fillStyle=p.col;sctx.fill();
     // Label
-    sctx.font=`${s.size}px Inter`;
-    sctx.fillStyle='rgba(255,255,255,0.8)';
-    sctx.textAlign=x<cx?'right':'left';
-    sctx.fillText(s.label, x+(x<cx?-10:10), y+5);
+    sctx.font='12px Inter';
+    sctx.fillStyle='rgba(255,255,255,0.55)';
+    sctx.textAlign=x>cx?'left':'right';
+    sctx.fillText(p.label,x+(x>cx?p.size+6:-(p.size+6)),y+4);
   });
-
-  requestAnimationFrame(drawSkills);
+  requestAnimationFrame(drawSolar);
 }
-
 function startSkills(){
-  if(skillsRunning)return;
-  skillsRunning=true;
-  drawSkills();
+  if(skillsRunning)return;skillsRunning=true;drawSolar();
 }
-
-// KEYBOARD
-window.addEventListener('keydown',e=>{
-  if(e.key==='ArrowRight'||e.key==='ArrowDown') goTo(current+1);
-  if(e.key==='ArrowLeft'||e.key==='ArrowUp') goTo(current-1);
-});
 </script>
 </body>
 </html>
