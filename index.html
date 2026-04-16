@@ -1,0 +1,442 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>nulpunkt</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Inter:wght@300;400;700;900&display=swap');
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --black: #0a0a0a;
+    --white: #f0f0f0;
+    --gray: #888;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--black);
+    color: var(--white);
+    font-family: 'Inter', sans-serif;
+    overflow-x: hidden;
+  }
+
+  /* NAV */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1.5rem 3rem;
+    mix-blend-mode: difference;
+  }
+
+  .logo {
+    font-family: 'Space Mono', monospace;
+    font-size: 1.1rem;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    color: var(--white);
+    text-decoration: none;
+  }
+
+  nav ul {
+    list-style: none;
+    display: flex;
+    gap: 2.5rem;
+  }
+
+  nav ul a {
+    color: var(--white);
+    text-decoration: none;
+    font-size: 0.8rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    opacity: 0.7;
+    transition: opacity 0.2s;
+  }
+
+  nav ul a:hover { opacity: 1; }
+
+  /* HERO */
+  .hero {
+    position: relative;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    background: var(--black);
+  }
+
+  .star-field {
+    position: absolute;
+    inset: 0;
+    background-image:
+      radial-gradient(1px 1px at 10% 15%, rgba(255,255,255,0.8) 0%, transparent 100%),
+      radial-gradient(1px 1px at 25% 40%, rgba(255,255,255,0.6) 0%, transparent 100%),
+      radial-gradient(1px 1px at 40% 10%, rgba(255,255,255,0.9) 0%, transparent 100%),
+      radial-gradient(1px 1px at 55% 30%, rgba(255,255,255,0.5) 0%, transparent 100%),
+      radial-gradient(1px 1px at 70% 60%, rgba(255,255,255,0.7) 0%, transparent 100%),
+      radial-gradient(1px 1px at 85% 20%, rgba(255,255,255,0.8) 0%, transparent 100%),
+      radial-gradient(1px 1px at 15% 70%, rgba(255,255,255,0.6) 0%, transparent 100%),
+      radial-gradient(1px 1px at 90% 80%, rgba(255,255,255,0.9) 0%, transparent 100%),
+      radial-gradient(1px 1px at 35% 85%, rgba(255,255,255,0.4) 0%, transparent 100%),
+      radial-gradient(1px 1px at 60% 90%, rgba(255,255,255,0.7) 0%, transparent 100%),
+      radial-gradient(1.5px 1.5px at 5% 50%, rgba(255,255,255,0.5) 0%, transparent 100%),
+      radial-gradient(1.5px 1.5px at 80% 45%, rgba(255,255,255,0.6) 0%, transparent 100%),
+      radial-gradient(1px 1px at 45% 55%, rgba(255,255,255,0.3) 0%, transparent 100%),
+      radial-gradient(1px 1px at 20% 25%, rgba(255,255,255,0.8) 0%, transparent 100%),
+      radial-gradient(1px 1px at 75% 75%, rgba(255,255,255,0.5) 0%, transparent 100%);
+  }
+
+  .window-frame {
+    position: absolute;
+    width: min(70vw, 70vh);
+    height: min(70vw, 70vh);
+    border-radius: 50%;
+    overflow: hidden;
+    border: 1px solid rgba(255,255,255,0.1);
+    box-shadow: 0 0 120px rgba(30,80,200,0.15), inset 0 0 60px rgba(0,0,20,0.8);
+  }
+
+  .earth {
+    width: 140%;
+    height: 140%;
+    margin: -20%;
+    border-radius: 50%;
+    background:
+      radial-gradient(ellipse at 30% 40%, rgba(20,100,200,0.9) 0%, transparent 50%),
+      radial-gradient(ellipse at 70% 60%, rgba(10,60,150,0.8) 0%, transparent 50%),
+      radial-gradient(ellipse at 50% 50%, #1a4a8a 0%, #0a2040 60%, #050f20 100%);
+    position: relative;
+    transition: transform 0.1s ease-out;
+  }
+
+  .earth::before {
+    content: '';
+    position: absolute;
+    inset: 5%;
+    border-radius: 50%;
+    background:
+      radial-gradient(ellipse at 35% 45%, rgba(34,139,34,0.6) 0%, transparent 30%),
+      radial-gradient(ellipse at 65% 35%, rgba(139,90,43,0.4) 0%, transparent 25%),
+      radial-gradient(ellipse at 20% 65%, rgba(34,139,34,0.5) 0%, transparent 20%),
+      radial-gradient(ellipse at 75% 70%, rgba(34,139,34,0.4) 0%, transparent 20%),
+      radial-gradient(ellipse at 50% 20%, rgba(255,255,255,0.3) 0%, transparent 15%);
+  }
+
+  .earth::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: 50%;
+    background: radial-gradient(ellipse at 35% 35%, rgba(255,255,255,0.08) 0%, transparent 50%);
+  }
+
+  .atmosphere {
+    position: absolute;
+    inset: -8%;
+    border-radius: 50%;
+    background: radial-gradient(ellipse at 50% 50%, transparent 55%, rgba(30,80,200,0.15) 70%, rgba(10,40,120,0.3) 85%, transparent 100%);
+    pointer-events: none;
+  }
+
+  .window-overlay {
+    position: absolute;
+    inset: 0;
+    border-radius: 50%;
+    background: radial-gradient(ellipse at 50% 110%, rgba(0,0,20,0.95) 0%, rgba(0,0,20,0.6) 40%, transparent 70%);
+    pointer-events: none;
+  }
+
+  .porthole-ring {
+    position: absolute;
+    width: calc(min(70vw, 70vh) + 40px);
+    height: calc(min(70vw, 70vh) + 40px);
+    border-radius: 50%;
+    border: 1px solid rgba(255,255,255,0.06);
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+  }
+
+  .porthole-ring-2 {
+    position: absolute;
+    width: calc(min(70vw, 70vh) + 80px);
+    height: calc(min(70vw, 70vh) + 80px);
+    border-radius: 50%;
+    border: 1px solid rgba(255,255,255,0.03);
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+  }
+
+  .hero-text {
+    position: relative;
+    z-index: 10;
+    text-align: center;
+    pointer-events: none;
+  }
+
+  .hero-logo {
+    font-family: 'Space Mono', monospace;
+    font-size: clamp(2rem, 6vw, 4.5rem);
+    font-weight: 700;
+    letter-spacing: 0.15em;
+    color: var(--white);
+    text-shadow: 0 0 40px rgba(255,255,255,0.3);
+    margin-bottom: 1rem;
+  }
+
+  .hero-sub {
+    font-size: clamp(0.7rem, 1.5vw, 0.9rem);
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.4);
+  }
+
+  .scroll-hint {
+    position: absolute;
+    bottom: 2rem;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 0.7rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.3);
+    animation: pulse 2s infinite;
+  }
+
+  @keyframes pulse { 0%,100%{opacity:0.3} 50%{opacity:0.7} }
+
+  /* SECTIONS */
+  .sections {
+    background: var(--white);
+    color: var(--black);
+    position: relative;
+    z-index: 10;
+  }
+
+  .section {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    align-items: start;
+    padding: 4rem 3rem;
+    border-bottom: 1px solid rgba(0,0,0,0.12);
+    gap: 2rem;
+  }
+
+  .section-title {
+    font-family: 'Inter', sans-serif;
+    font-size: clamp(2.5rem, 6vw, 5rem);
+    font-weight: 900;
+    letter-spacing: -0.02em;
+    line-height: 1;
+  }
+
+  .section-content {
+    padding-top: 0.5rem;
+    font-size: 0.95rem;
+    line-height: 1.7;
+    color: #333;
+    text-align: right;
+  }
+
+  .skills-list {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 1rem;
+    flex-wrap: wrap;
+  }
+
+  .skills-list span {
+    font-size: 0.9rem;
+    color: #444;
+  }
+
+  .skills-list .dot {
+    color: #bbb;
+    font-size: 0.6rem;
+  }
+
+  /* CONTACT */
+  .contact-section {
+    padding: 4rem 3rem;
+    background: var(--white);
+  }
+
+  .contact-section .section-title {
+    margin-bottom: 2.5rem;
+  }
+
+  .contact-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+    margin-bottom: 1rem;
+  }
+
+  .contact-full { grid-column: 1 / -1; }
+
+  input, textarea {
+    width: 100%;
+    padding: 1rem 1.25rem;
+    border: 1px solid rgba(0,0,0,0.15);
+    border-radius: 0;
+    background: transparent;
+    font-family: 'Inter', sans-serif;
+    font-size: 0.9rem;
+    color: var(--black);
+    outline: none;
+    transition: border-color 0.2s;
+    resize: none;
+  }
+
+  input::placeholder, textarea::placeholder { color: #aaa; }
+  input:focus, textarea:focus { border-color: var(--black); }
+
+  textarea { height: 160px; }
+
+  .submit-btn {
+    width: 100%;
+    padding: 1.1rem;
+    background: var(--black);
+    color: var(--white);
+    border: none;
+    font-family: 'Inter', sans-serif;
+    font-size: 0.85rem;
+    letter-spacing: 0.1em;
+    text-transform: lowercase;
+    cursor: pointer;
+    margin-top: 0.5rem;
+    transition: opacity 0.2s;
+  }
+
+  .submit-btn:hover { opacity: 0.8; }
+
+  /* FOOTER */
+  footer {
+    background: var(--black);
+    color: rgba(255,255,255,0.3);
+    padding: 2rem 3rem;
+    font-size: 0.75rem;
+    letter-spacing: 0.1em;
+    display: flex;
+    justify-content: space-between;
+  }
+
+  /* MOBILE */
+  @media (max-width: 700px) {
+    nav { padding: 1.25rem 1.5rem; }
+    nav ul { gap: 1.5rem; }
+    .section { grid-template-columns: 1fr; padding: 3rem 1.5rem; }
+    .section-content { text-align: left; }
+    .skills-list { justify-content: flex-start; }
+    .contact-section { padding: 3rem 1.5rem; }
+    .contact-grid { grid-template-columns: 1fr; }
+    footer { flex-direction: column; gap: 0.5rem; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="#" class="logo">nulpunkt</a>
+  <ul>
+    <li><a href="#about">about</a></li>
+    <li><a href="#skills">skills</a></li>
+    <li><a href="#pricing">pricing</a></li>
+    <li><a href="#contact">contact</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero" id="hero">
+  <div class="star-field"></div>
+  <div class="porthole-ring-2"></div>
+  <div class="porthole-ring"></div>
+  <div class="window-frame">
+    <div class="earth" id="earth">
+      <div class="atmosphere"></div>
+    </div>
+    <div class="window-overlay"></div>
+  </div>
+  <div class="hero-text">
+    <div class="hero-logo">nulpunkt</div>
+    <div class="hero-sub">finding the zero point</div>
+  </div>
+  <div class="scroll-hint">scroll</div>
+</section>
+
+<!-- CONTENT SECTIONS -->
+<div class="sections">
+
+  <div class="section" id="about">
+    <div class="section-title">ABOUT</div>
+    <div class="section-content">
+      finding patterns in complex systems within e-commerce, making them predictable and applicable
+    </div>
+  </div>
+
+  <div class="section" id="skills">
+    <div class="section-title">SKILLS</div>
+    <div class="section-content">
+      <div class="skills-list">
+        <span>operational optimization</span>
+        <span class="dot">•</span>
+        <span>architecture</span>
+        <span class="dot">•</span>
+        <span>automation</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="section" id="pricing">
+    <div class="section-title">PRICING</div>
+    <div class="section-content">expensive</div>
+  </div>
+
+  <div class="contact-section" id="contact">
+    <div class="section-title">CONTACT</div>
+    <div class="contact-grid">
+      <input type="text" placeholder="name">
+      <input type="email" placeholder="email">
+      <input type="tel" placeholder="phone number" class="contact-full">
+      <textarea placeholder="message" class="contact-full"></textarea>
+    </div>
+    <button class="submit-btn">submit</button>
+  </div>
+
+</div>
+
+<footer>
+  <span>nulpunkt</span>
+  <span>finding the zero point</span>
+</footer>
+
+<script>
+  const earth = document.getElementById('earth');
+  let tY = 50;
+
+  window.addEventListener('scroll', () => {
+    const hero = document.querySelector('.hero');
+    const rect = hero.getBoundingClientRect();
+    const progress = Math.max(0, Math.min(1, -rect.top / rect.height));
+    tY = 50 + progress * 60;
+    earth.style.transform = `translateY(${progress * 30}%)`;
+  });
+
+  window.addEventListener('mousemove', e => {
+    const x = (e.clientX / window.innerWidth - 0.5) * 6;
+    const y = (e.clientY / window.innerHeight - 0.5) * 4;
+    earth.style.transform = `translate(${x}px, ${y}px)`;
+  });
+</script>
+
+</body>
+</html>
