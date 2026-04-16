@@ -16,24 +16,18 @@ canvas{position:fixed;inset:0;z-index:0;}
 #cur{position:fixed;width:12px;height:12px;border-radius:50%;background:#fff;pointer-events:none;z-index:9999;transform:translate(-50%,-50%);mix-blend-mode:difference;}
 #cur2{position:fixed;width:40px;height:40px;border-radius:50%;border:1px solid rgba(255,255,255,0.4);pointer-events:none;z-index:9998;transform:translate(-50%,-50%);mix-blend-mode:difference;transition:all 0.12s;}
 
-/* NAV */
-nav{position:fixed;top:0;left:0;right:0;z-index:200;display:flex;justify-content:space-between;align-items:center;padding:1.25rem 2rem;background:rgba(0,0,0,0.5);backdrop-filter:blur(12px);border-bottom:0.5px solid rgba(255,255,255,0.07);}
-.logo{font-family:'Space Mono',monospace;font-size:0.85rem;font-weight:700;letter-spacing:0.1em;color:#fff;text-decoration:none;}
-nav ul{list-style:none;display:flex;gap:0.25rem;}
-nav ul a{display:block;padding:0.4rem 0.85rem;font-size:0.65rem;letter-spacing:0.12em;text-transform:uppercase;color:rgba(255,255,255,0.4);text-decoration:none;border:0.5px solid transparent;border-radius:4px;transition:all .15s;}
-nav ul a:hover{color:#fff;border-color:rgba(255,255,255,0.15);background:rgba(255,255,255,0.06);}
+
 
 #panels{position:fixed;inset:0;z-index:10;display:flex;width:500vw;transition:transform 0.9s cubic-bezier(0.77,0,0.175,1);}
 .panel{width:100vw;height:100vh;flex-shrink:0;display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden;}
 
-#nav-arrows{position:fixed;right:2rem;bottom:2rem;z-index:50;display:flex;flex-direction:column;gap:0.5rem;mix-blend-mode:difference;}
+#nav-arrows{position:fixed;right:2rem;bottom:2rem;z-index:50;display:flex;flex-direction:row;gap:0.5rem;mix-blend-mode:difference;}
 .arrow-btn{width:36px;height:36px;border:1px solid rgba(255,255,255,0.3);border-radius:50%;background:transparent;color:#fff;font-size:0.9rem;display:flex;align-items:center;justify-content:center;cursor:pointer;transition:all 0.2s;}
 .arrow-btn:hover{background:rgba(255,255,255,0.15);border-color:#fff;}
 
 /* P0 — PULSAR HERO */
 #p0 canvas{position:absolute;inset:0;width:100%;height:100%;}
-#p0 .sub{position:absolute;bottom:3rem;left:3rem;font-size:0.7rem;letter-spacing:0.3em;text-transform:uppercase;color:rgba(255,255,255,0.25);z-index:2;}
-#p0 .nav-hint{position:absolute;bottom:3rem;right:3rem;font-size:0.7rem;letter-spacing:0.2em;color:rgba(255,255,255,0.15);animation:blink 2s infinite;z-index:2;}
+
 @keyframes blink{0%,100%{opacity:0.15}50%{opacity:0.5}}
 
 /* P1 — ABOUT */
@@ -84,22 +78,11 @@ textarea{height:100px;}
 
 <div id="intro"><div id="intro-text">nulpunkt</div></div>
 
-<nav>
-  <a href="#" class="logo" onclick="goTo(0);return false;">nulpunkt</a>
-  <ul>
-    <li><a href="#" onclick="goTo(1);return false;">about</a></li>
-    <li><a href="#" onclick="goTo(2);return false;">skills</a></li>
-    <li><a href="#" onclick="goTo(3);return false;">pricing</a></li>
-    <li><a href="#" onclick="goTo(4);return false;">contact</a></li>
-  </ul>
-</nav>
-
 <div id="panels">
 
   <div class="panel" id="p0">
     <canvas id="pulsarCanvas"></canvas>
-    <div class="sub">nulpunkt · finding the zero point</div>
-    <div class="nav-hint">→ scroll or use arrow keys</div>
+
   </div>
 
   <div class="panel" id="p1">
@@ -113,7 +96,7 @@ textarea{height:100px;}
   </div>
 
   <div class="panel" id="p3">
-    <div class="label">pricing</div>
+    <div class="label">pricing — what it costs</div>
     <div class="price-wrap">
       <div class="price-word">expensive</div>
     </div>
@@ -135,8 +118,8 @@ textarea{height:100px;}
 </div>
 
 <div id="nav-arrows">
-  <button class="arrow-btn" onclick="goTo(current-1)">↑</button>
-  <button class="arrow-btn" onclick="goTo(current+1)">↓</button>
+  <button class="arrow-btn" onclick="goTo(current-1)">←</button>
+  <button class="arrow-btn" onclick="goTo(current+1)">→</button>
 </div>
 
 <script>
@@ -256,23 +239,23 @@ let sW,sH,skillsRunning=false;
 function resizeSc(){sW=sc.width=sc.offsetWidth;sH=sc.height=sc.offsetHeight;}
 resizeSc();window.addEventListener('resize',resizeSc);
 const planets=[
-  {label:'operational optimization',orbit:0.16,speed:0.008,angle:0.5,size:3.5,col:'rgba(255,255,255,0.9)'},
-  {label:'architecture',orbit:0.23,speed:0.005,angle:2.2,size:5,col:'rgba(255,255,255,0.85)'},
-  {label:'automation',orbit:0.30,speed:0.004,angle:4.0,size:4,col:'rgba(255,255,255,0.8)'},
-  {label:'e-commerce',orbit:0.38,speed:0.003,angle:1.2,size:6,col:'rgba(255,255,255,0.85)'},
-  {label:'systems thinking',orbit:0.45,speed:0.002,angle:3.5,size:3.5,col:'rgba(255,255,255,0.75)'},
-  {label:'pattern recognition',orbit:0.52,speed:0.0015,angle:0.8,size:3,col:'rgba(255,255,255,0.7)'},
+  {label:'operational optimization',orbit:0.12,speed:0.008,angle:0.5,size:3.5,col:'rgba(255,255,255,0.9)'},
+  {label:'architecture',orbit:0.19,speed:0.005,angle:2.2,size:5,col:'rgba(255,255,255,0.85)'},
+  {label:'automation',orbit:0.26,speed:0.004,angle:4.0,size:4,col:'rgba(255,255,255,0.8)'},
+  {label:'e-commerce',orbit:0.33,speed:0.003,angle:1.2,size:6,col:'rgba(255,255,255,0.85)'},
+  {label:'systems thinking',orbit:0.39,speed:0.002,angle:3.5,size:3.5,col:'rgba(255,255,255,0.75)'},
+  {label:'pattern recognition',orbit:0.44,speed:0.0015,angle:0.8,size:3,col:'rgba(255,255,255,0.7)'},
 ];
 function drawSolar(){
   if(!skillsRunning)return;
   sctx.clearRect(0,0,sW,sH);
   const cx=sW/2,cy=sH/2;
-  const base=Math.min(sW,sH)*0.5;
+  const base=Math.min(sW,sH)*0.45;
 
-  // Orbit rings
+  // Orbit rings — more visible
   planets.forEach(p=>{
     sctx.beginPath();sctx.arc(cx,cy,p.orbit*base*2,0,Math.PI*2);
-    sctx.strokeStyle='rgba(255,255,255,0.05)';sctx.lineWidth=0.5;sctx.stroke();
+    sctx.strokeStyle='rgba(255,255,255,0.12)';sctx.lineWidth=0.5;sctx.stroke();
   });
 
   // Sun glow
@@ -297,11 +280,17 @@ function drawSolar(){
     sctx.beginPath();sctx.arc(x,y,p.size*3,0,Math.PI*2);sctx.fillStyle=pg;sctx.fill();
     // Planet
     sctx.beginPath();sctx.arc(x,y,p.size,0,Math.PI*2);sctx.fillStyle=p.col;sctx.fill();
-    // Label
+    // Label — clamped inside canvas
     sctx.font='12px Inter';
     sctx.fillStyle='rgba(255,255,255,0.55)';
-    sctx.textAlign=x>cx?'left':'right';
-    sctx.fillText(p.label,x+(x>cx?p.size+6:-(p.size+6)),y+4);
+    const side=x>cx?1:-1;
+    const lx=x+side*(p.size+8);
+    const ly=Math.max(16,Math.min(sH-8,y+4));
+    sctx.textAlign=side>0?'left':'right';
+    // Clamp label horizontally
+    const measure=sctx.measureText(p.label).width;
+    const clampedLx=side>0?Math.min(lx,sW-measure-8):Math.max(lx,measure+8);
+    sctx.fillText(p.label,clampedLx,ly);
   });
   requestAnimationFrame(drawSolar);
 }
