@@ -7,8 +7,9 @@
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Inter:wght@300;400;700;900&display=swap');
 *{box-sizing:border-box;margin:0;padding:0;}
-html,body{width:100%;height:100%;overflow:hidden;background:#000;color:#fff;font-family:'Inter',sans-serif;}
+html,body{width:100%;height:100%;overflow:hidden;background:#000;color:#fff;font-family:'Inter',sans-serif;cursor:none !important;}
 canvas{position:fixed;inset:0;z-index:0;}
+*{cursor:none !important;}
 
 #intro{position:fixed;inset:0;z-index:100;display:flex;align-items:center;justify-content:center;cursor:none;background:#000;}
 #intro-text{font-family:'Space Mono',monospace;font-size:clamp(4rem,12vw,10rem);font-weight:700;letter-spacing:0.1em;color:#fff;user-select:none;transition:opacity 0.5s;}
@@ -127,7 +128,7 @@ textarea{height:100px;}
 const cur=document.getElementById('cur'),cur2=document.getElementById('cur2');
 let mx=0,my=0,cx=0,cy=0;
 document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY;cur.style.left=mx+'px';cur.style.top=my+'px';},{passive:true});
-setInterval(()=>{cx+=(mx-cx)*0.15;cy+=(my-cy)*0.15;cur2.style.left=cx+'px';cur2.style.top=cy+'px';},16);
+setInterval(()=>{cx+=(mx-cx)*0.35;cy+=(my-cy)*0.35;cur2.style.left=cx+'px';cur2.style.top=cy+'px';},16);
 
 // BG STARS
 const bg=document.getElementById('bg');
