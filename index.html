@@ -6,92 +6,87 @@
 <title>nulpunkt</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@700&family=Inter:wght@400;500;900&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;900&display=swap" rel="stylesheet">
 <style>
 *{box-sizing:border-box;margin:0;padding:0;}
-:root{
-  --bg:#191919;--bg2:#1f1f1d;--bg3:#252523;
-  --border:rgba(255,255,255,0.07);--border2:rgba(255,255,255,0.14);
-  --text:#e8e6df;--muted:#555;--dim:#333;
-}
+:root{--bg:#0a0a0a;--bg2:#111;--text:#f0f0f0;--muted:#666;--dim:#333;--border:rgba(255,255,255,0.08);}
 html,body{width:100%;height:100%;overflow:hidden;background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;cursor:none;}
 
 #cur{position:fixed;width:8px;height:8px;border-radius:50%;background:var(--text);pointer-events:none;z-index:9999;will-change:transform;transform:translate(-50%,-50%);}
-#cur2{position:fixed;width:34px;height:34px;border-radius:50%;border:1px solid rgba(255,255,255,0.25);pointer-events:none;z-index:9998;will-change:transform;transform:translate(-50%,-50%);}
+#cur2{position:fixed;width:32px;height:32px;border-radius:50%;border:1px solid rgba(255,255,255,0.2);pointer-events:none;z-index:9998;will-change:transform;transform:translate(-50%,-50%);transition:width .2s,height .2s,opacity .2s;}
 
-/* NAV */
-nav{position:fixed;top:0;left:0;right:0;z-index:200;display:flex;justify-content:space-between;align-items:center;padding:1.5rem 2.5rem;}
-.logo{font-family:'Space Mono',monospace;font-size:0.85rem;font-weight:700;letter-spacing:0.1em;color:var(--text);text-decoration:none;}
+nav{position:fixed;top:0;left:0;right:0;z-index:200;display:flex;justify-content:space-between;align-items:center;padding:1.75rem 2.5rem;}
+.logo-svg{height:22px;width:auto;filter:invert(1);opacity:0.9;}
 nav ul{list-style:none;display:flex;gap:0.25rem;}
 nav ul a{display:block;padding:0.4rem 0.8rem;font-size:0.65rem;letter-spacing:0.12em;text-transform:uppercase;color:var(--muted);text-decoration:none;border:0.5px solid transparent;border-radius:4px;transition:all .15s;}
-nav ul a:hover{color:var(--text);border-color:var(--border2);background:var(--bg3);}
+nav ul a:hover{color:var(--text);border-color:var(--border);background:rgba(255,255,255,0.05);}
 
 /* PANELS */
-#panels{position:fixed;inset:0;display:flex;width:500vw;will-change:transform;transition:transform 0.75s cubic-bezier(0.86,0,0.07,1);}
+#panels{position:fixed;inset:0;display:flex;width:500vw;will-change:transform;transition:transform 0.85s cubic-bezier(0.77,0,0.175,1);}
 .panel{width:100vw;height:100vh;flex-shrink:0;position:relative;overflow:hidden;}
 
-/* NAV DOTS */
 #dots{position:fixed;right:2rem;top:50%;transform:translateY(-50%);z-index:300;display:flex;flex-direction:column;gap:8px;}
 .dot{width:5px;height:5px;border-radius:50%;background:var(--muted);cursor:none;transition:all .25s;}
-.dot.active{background:var(--text);transform:scale(1.5);}
+.dot.active{background:var(--text);transform:scale(1.6);}
 
-/* PANEL 0 — HERO */
+/* P0 — HERO */
 #p0{background:var(--bg);display:flex;align-items:center;justify-content:center;}
-#p0 .grid-lines{position:absolute;inset:0;background-image:linear-gradient(var(--border) 1px,transparent 1px),linear-gradient(90deg,var(--border) 1px,transparent 1px);background-size:60px 60px;opacity:0.5;}
-#p0 .grid-fade{position:absolute;inset:0;background:radial-gradient(ellipse at center,transparent 30%,var(--bg) 80%);}
-#p0 .hero-center{position:relative;z-index:2;text-align:center;}
-#p0 .hero-name{font-size:clamp(5rem,14vw,13rem);font-weight:900;letter-spacing:-0.03em;line-height:0.88;color:var(--text);}
+#p0 .stars{position:absolute;inset:0;}
+#p0 .stars span{position:absolute;border-radius:50%;background:#fff;}
+#p0 .hero-c{position:relative;z-index:2;text-align:center;}
+#p0 .hero-name{font-size:clamp(5rem,15vw,14rem);font-weight:900;letter-spacing:-0.03em;line-height:0.85;color:var(--text);}
 #p0 .hero-sub{font-size:0.7rem;letter-spacing:0.35em;text-transform:uppercase;color:var(--muted);margin-top:1.5rem;}
-#p0 .origin{position:absolute;bottom:3rem;left:50%;transform:translateX(-50%);font-size:0.6rem;letter-spacing:0.2em;color:var(--dim);text-transform:uppercase;animation:blink 2.5s infinite;}
-@keyframes blink{0%,100%{opacity:0.3}50%{opacity:0.8}}
+#p0 .hint{position:absolute;bottom:2.5rem;left:50%;transform:translateX(-50%);font-size:0.6rem;letter-spacing:0.25em;text-transform:uppercase;color:var(--dim);animation:fade 2.5s infinite;}
+@keyframes fade{0%,100%{opacity:0.3}50%{opacity:0.8}}
 
-/* PANEL 1 — ABOUT */
-#p1{background:var(--text);color:var(--bg);display:flex;}
-#p1 .left{width:40%;border-right:0.5px solid rgba(0,0,0,0.1);display:flex;flex-direction:column;justify-content:space-between;padding:5rem 3rem 3rem;}
-#p1 .left h2{font-size:clamp(4rem,8vw,8rem);font-weight:900;letter-spacing:-0.04em;line-height:0.85;}
-#p1 .left .index{font-size:0.6rem;letter-spacing:0.2em;color:rgba(0,0,0,0.3);text-transform:uppercase;}
-#p1 .right{flex:1;display:flex;align-items:center;padding:5rem 4rem;}
-#p1 .right p{font-size:clamp(1rem,1.8vw,1.35rem);line-height:1.8;color:rgba(0,0,0,0.65);max-width:520px;}
-#p1 .right p strong{color:rgba(0,0,0,0.85);font-weight:500;}
+/* P1 — ABOUT */
+#p1{background:#f0f0f0;color:#0a0a0a;display:flex;}
+#p1 .a-left{width:38%;border-right:0.5px solid rgba(0,0,0,0.1);display:flex;flex-direction:column;justify-content:space-between;padding:5.5rem 3rem 3rem;}
+#p1 .a-left h2{font-size:clamp(4rem,8vw,8rem);font-weight:900;letter-spacing:-0.04em;line-height:0.85;}
+#p1 .a-left .idx{font-size:0.6rem;letter-spacing:0.2em;color:rgba(0,0,0,0.3);text-transform:uppercase;}
+#p1 .a-right{flex:1;display:flex;align-items:center;padding:5rem 4rem;}
+#p1 .words{font-size:clamp(1rem,1.8vw,1.3rem);line-height:1.85;color:rgba(0,0,0,0.5);max-width:520px;}
+#p1 .words .w{display:inline-block;opacity:0;transform:translateY(20px);transition:opacity .5s,transform .5s;}
+#p1 .words strong{color:rgba(0,0,0,0.8);font-weight:500;}
 
-/* PANEL 2 — SKILLS */
-#p2{background:var(--bg);display:grid;grid-template-rows:auto 1fr;padding-top:5.5rem;}
-#p2 .skills-header{padding:0 3rem 2rem;border-bottom:0.5px solid var(--border);}
-#p2 .skills-header h2{font-size:clamp(3rem,6vw,6rem);font-weight:900;letter-spacing:-0.03em;color:var(--text);}
-#p2 .skills-grid{display:grid;grid-template-columns:repeat(3,1fr);border-top:none;}
-.skill-item{padding:2.5rem 3rem;border-right:0.5px solid var(--border);position:relative;overflow:hidden;transition:background .2s;}
-.skill-item:last-child{border-right:none;}
-.skill-item:hover{background:var(--bg2);}
-.skill-item::after{content:'';position:absolute;bottom:0;left:0;width:0;height:1px;background:var(--text);transition:width .4s;}
-.skill-item:hover::after{width:100%;}
-.skill-n{font-size:0.6rem;letter-spacing:0.2em;color:var(--dim);margin-bottom:1.5rem;font-family:'Space Mono',monospace;}
-.skill-t{font-size:clamp(1.1rem,2vw,1.4rem);font-weight:500;color:var(--text);margin-bottom:1rem;line-height:1.2;}
-.skill-d{font-size:0.8rem;color:var(--muted);line-height:1.7;}
+/* P2 — SKILLS */
+#p2{background:var(--bg);display:flex;align-items:center;justify-content:center;}
+#p2 .skill-orbit{position:relative;width:min(80vw,80vh);height:min(80vw,80vh);}
+#p2 .orbit-ring{position:absolute;top:50%;left:50%;border-radius:50%;border:0.5px solid var(--border);transform:translate(-50%,-50%);}
+#p2 .origin{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);text-align:center;z-index:2;}
+#p2 .origin h2{font-size:clamp(1.5rem,3vw,2.5rem);font-weight:900;color:var(--text);}
+#p2 .origin p{font-size:0.6rem;letter-spacing:0.2em;color:var(--muted);text-transform:uppercase;margin-top:0.5rem;}
+.skill-node{position:absolute;transform:translate(-50%,-50%);text-align:center;cursor:none;}
+.skill-node .node-dot{width:5px;height:5px;border-radius:50%;background:var(--text);margin:0 auto 6px;opacity:0.6;}
+.skill-node .node-label{font-size:clamp(0.65rem,1.2vw,0.8rem);color:rgba(255,255,255,0.6);white-space:nowrap;letter-spacing:0.05em;}
+.skill-node:hover .node-label{color:var(--text);}
+.skill-node:hover .node-dot{opacity:1;transform:scale(1.5);}
+.node-dot{transition:all .2s;}
 
-/* PANEL 3 — PRICING */
+/* P3 — PRICING */
 #p3{background:var(--bg);display:flex;align-items:center;justify-content:center;}
-#p3 .pricing-inner{position:relative;z-index:2;max-width:800px;padding:3rem;}
-#p3 .price-label{font-size:0.6rem;letter-spacing:0.25em;text-transform:uppercase;color:var(--muted);margin-bottom:2rem;font-family:'Space Mono',monospace;}
-#p3 .price-word{font-size:clamp(4rem,12vw,11rem);font-weight:900;letter-spacing:-0.03em;color:transparent;-webkit-text-stroke:1px rgba(255,255,255,0.15);transition:all .3s;line-height:1;}
-#p3 .price-word:hover{color:var(--text);-webkit-text-stroke:0px;}
-#p3 .price-body{margin-top:3rem;display:grid;grid-template-columns:1fr 1fr;gap:3rem;border-top:0.5px solid var(--border);padding-top:2.5rem;}
-#p3 .price-col p{font-size:0.85rem;color:var(--muted);line-height:1.8;}
-#p3 .price-col strong{color:#888;font-weight:500;}
+#p3 .pr-inner{max-width:900px;padding:3rem;position:relative;z-index:2;}
+#p3 .pr-lbl{font-size:0.6rem;letter-spacing:0.25em;text-transform:uppercase;color:var(--muted);margin-bottom:2rem;}
+#p3 .pr-word{font-size:clamp(5rem,13vw,12rem);font-weight:900;letter-spacing:-0.03em;color:transparent;-webkit-text-stroke:1px rgba(255,255,255,0.12);line-height:1;transition:all .4s;user-select:none;}
+#p3 .pr-word:hover{color:var(--text);-webkit-text-stroke:0px;}
+#p3 .pr-body{margin-top:3.5rem;display:grid;grid-template-columns:1fr 1fr;gap:4rem;border-top:0.5px solid var(--border);padding-top:2.5rem;}
+#p3 .pr-col p{font-size:0.85rem;color:var(--muted);line-height:1.85;}
+#p3 .pr-col strong{color:#888;font-weight:500;}
 
-/* PANEL 4 — CONTACT */
-#p4{background:var(--bg2);display:flex;}
-#p4 .c-left{width:45%;border-right:0.5px solid var(--border);display:flex;flex-direction:column;justify-content:space-between;padding:5rem 3rem 3rem;}
-#p4 .c-left h2{font-size:clamp(4rem,7vw,7rem);font-weight:900;letter-spacing:-0.04em;line-height:0.85;color:var(--text);}
-#p4 .c-left .status{font-size:0.65rem;letter-spacing:0.15em;color:var(--muted);text-transform:uppercase;display:flex;align-items:center;gap:0.5rem;}
-#p4 .c-left .status::before{content:'';width:6px;height:6px;border-radius:50%;background:#1D9E75;animation:blink 2.5s infinite;flex-shrink:0;}
-#p4 .c-right{flex:1;display:flex;flex-direction:column;justify-content:center;padding:5rem 3rem;gap:0.65rem;}
-input,textarea{width:100%;padding:0.75rem 1rem;background:var(--bg);border:0.5px solid var(--border);border-radius:6px;color:var(--text);font-family:'Inter',sans-serif;font-size:0.82rem;outline:none;transition:border-color .15s;resize:none;}
-input::placeholder,textarea::placeholder{color:var(--dim);}
-input:focus,textarea:focus{border-color:var(--border2);}
-.two{display:grid;grid-template-columns:1fr 1fr;gap:0.65rem;}
-textarea{height:90px;}
-.submit{padding:0.85rem;background:var(--text);color:var(--bg);border:none;border-radius:6px;font-family:'Space Mono',monospace;font-size:0.65rem;letter-spacing:0.18em;cursor:none;transition:opacity .15s;width:100%;margin-top:0.25rem;}
-.submit:hover{opacity:0.8;}
+/* P4 — CONTACT */
+#p4{background:#f0f0f0;color:#0a0a0a;display:flex;}
+#p4 .c-left{width:42%;border-right:0.5px solid rgba(0,0,0,0.08);display:flex;flex-direction:column;justify-content:space-between;padding:5.5rem 3rem 3rem;}
+#p4 .c-left h2{font-size:clamp(4rem,7vw,7.5rem);font-weight:900;letter-spacing:-0.04em;line-height:0.85;}
+#p4 .c-status{font-size:0.65rem;letter-spacing:0.15em;color:rgba(0,0,0,0.35);text-transform:uppercase;display:flex;align-items:center;gap:0.5rem;}
+#p4 .c-status::before{content:'';width:6px;height:6px;border-radius:50%;background:#1a9e6e;flex-shrink:0;animation:fade 2.5s infinite;}
+#p4 .c-right{flex:1;display:flex;flex-direction:column;justify-content:center;padding:5rem 3.5rem;gap:0.65rem;}
+input,textarea{width:100%;padding:0.8rem 1rem;background:transparent;border:none;border-bottom:0.5px solid rgba(0,0,0,0.15);color:#0a0a0a;font-family:'Inter',sans-serif;font-size:0.85rem;outline:none;transition:border-color .15s;resize:none;}
+input::placeholder,textarea::placeholder{color:rgba(0,0,0,0.25);}
+input:focus,textarea:focus{border-color:rgba(0,0,0,0.5);}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:1rem;}
+textarea{height:80px;}
+.submit{margin-top:1rem;padding:0.9rem 2rem;background:#0a0a0a;color:#f0f0f0;border:none;font-family:'Inter',sans-serif;font-size:0.75rem;letter-spacing:0.18em;cursor:none;transition:opacity .15s;align-self:flex-start;}
+.submit:hover{opacity:0.7;}
 
 @media(max-width:700px){
   html,body{overflow:auto;cursor:auto;}
@@ -99,19 +94,13 @@ textarea{height:90px;}
   .panel{width:100%;height:auto;min-height:100vh;}
   #dots,#cur,#cur2{display:none;}
   nav ul{display:none;}
-  #p1{flex-direction:column;}
-  #p1 .left{width:100%;border-right:none;border-bottom:0.5px solid rgba(0,0,0,0.1);padding:5rem 1.5rem 2rem;}
-  #p1 .right{padding:2rem 1.5rem;}
-  #p2 .skills-grid{grid-template-columns:1fr;}
-  .skill-item{border-right:none;border-bottom:0.5px solid var(--border);}
-  #p3 .price-body{grid-template-columns:1fr;}
-  #p4{flex-direction:column;}
-  #p4 .c-left{width:100%;border-right:none;border-bottom:0.5px solid var(--border);padding:4rem 1.5rem 2rem;}
-  #p4 .c-right{padding:2rem 1.5rem;}
+  #p1,#p4{flex-direction:column;}
+  #p1 .a-left,#p4 .c-left{width:100%;border-right:none;border-bottom:0.5px solid rgba(0,0,0,0.08);padding:4rem 1.5rem 2rem;}
+  #p1 .a-right,#p4 .c-right{padding:2rem 1.5rem;}
+  #p2 .skill-orbit{width:90vw;height:90vw;}
+  #p3 .pr-body{grid-template-columns:1fr;gap:2rem;}
+  #p3 .pr-inner{padding:4rem 1.5rem;}
   .two{grid-template-columns:1fr;}
-  #p2{padding-top:4rem;}
-  #p2 .skills-header{padding:0 1.5rem 1.5rem;}
-  #p3 .pricing-inner{padding:4rem 1.5rem;}
   nav{padding:1.25rem 1.5rem;}
 }
 </style>
@@ -122,9 +111,19 @@ textarea{height:90px;}
 <div id="cur2"></div>
 
 <nav>
-  <a href="#" class="logo">nulpunkt</a>
+  <!-- PIXEL LOGO SVG -->
+  <svg class="logo-svg" viewBox="0 0 320 48" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+    <rect x="0" y="0" width="6" height="6"/><rect x="0" y="6" width="6" height="6"/><rect x="0" y="12" width="6" height="6"/><rect x="0" y="18" width="6" height="6"/><rect x="0" y="24" width="6" height="6"/><rect x="0" y="30" width="6" height="6"/><rect x="0" y="36" width="6" height="6"/><rect x="6" y="36" width="6" height="6"/><rect x="12" y="36" width="6" height="6"/><rect x="18" y="30" width="6" height="6"/><rect x="18" y="24" width="6" height="6"/><rect x="18" y="18" width="6" height="6"/><rect x="18" y="12" width="6" height="6"/><rect x="18" y="6" width="6" height="6"/><rect x="18" y="0" width="6" height="6"/>
+    <rect x="30" y="0" width="6" height="6"/><rect x="30" y="6" width="6" height="6"/><rect x="30" y="12" width="6" height="6"/><rect x="30" y="18" width="6" height="6"/><rect x="30" y="24" width="6" height="6"/><rect x="30" y="30" width="6" height="6"/><rect x="30" y="36" width="6" height="6"/><rect x="36" y="12" width="6" height="6"/><rect x="42" y="6" width="6" height="6"/><rect x="42" y="18" width="6" height="6"/><rect x="48" y="0" width="6" height="6"/><rect x="48" y="24" width="6" height="6"/><rect x="48" y="30" width="6" height="6"/><rect x="48" y="36" width="6" height="6"/>
+    <rect x="60" y="6" width="6" height="6"/><rect x="60" y="12" width="6" height="6"/><rect x="60" y="18" width="6" height="6"/><rect x="60" y="24" width="6" height="6"/><rect x="60" y="30" width="6" height="6"/><rect x="66" y="0" width="6" height="6"/><rect x="66" y="36" width="6" height="6"/><rect x="72" y="0" width="6" height="6"/><rect x="72" y="36" width="6" height="6"/><rect x="78" y="6" width="6" height="6"/><rect x="78" y="12" width="6" height="6"/><rect x="78" y="18" width="6" height="6"/><rect x="78" y="24" width="6" height="6"/><rect x="78" y="30" width="6" height="6"/>
+    <rect x="90" y="0" width="6" height="6"/><rect x="90" y="6" width="6" height="6"/><rect x="90" y="12" width="6" height="6"/><rect x="90" y="18" width="6" height="6"/><rect x="90" y="24" width="6" height="6"/><rect x="90" y="30" width="6" height="6"/><rect x="90" y="36" width="6" height="6"/><rect x="96" y="18" width="6" height="6"/><rect x="102" y="12" width="6" height="6"/><rect x="102" y="24" width="6" height="6"/><rect x="108" y="6" width="6" height="6"/><rect x="108" y="30" width="6" height="6"/><rect x="114" y="0" width="6" height="6"/><rect x="114" y="36" width="6" height="6"/>
+    <rect x="126" y="0" width="6" height="6"/><rect x="126" y="6" width="6" height="6"/><rect x="126" y="12" width="6" height="6"/><rect x="126" y="18" width="6" height="6"/><rect x="126" y="24" width="6" height="6"/><rect x="126" y="30" width="6" height="6"/><rect x="126" y="36" width="6" height="6"/><rect x="132" y="12" width="6" height="6"/><rect x="138" y="6" width="6" height="6"/><rect x="144" y="0" width="6" height="6"/><rect x="144" y="6" width="6" height="6"/><rect x="144" y="12" width="6" height="6"/><rect x="144" y="18" width="6" height="6"/><rect x="144" y="24" width="6" height="6"/><rect x="144" y="30" width="6" height="6"/><rect x="144" y="36" width="6" height="6"/>
+    <rect x="156" y="0" width="6" height="6"/><rect x="156" y="6" width="6" height="6"/><rect x="156" y="12" width="6" height="6"/><rect x="156" y="18" width="6" height="6"/><rect x="156" y="24" width="6" height="6"/><rect x="156" y="30" width="6" height="6"/><rect x="156" y="36" width="6" height="6"/><rect x="162" y="36" width="6" height="6"/><rect x="168" y="36" width="6" height="6"/><rect x="174" y="30" width="6" height="6"/><rect x="174" y="24" width="6" height="6"/><rect x="180" y="18" width="6" height="6"/><rect x="186" y="12" width="6" height="6"/><rect x="186" y="6" width="6" height="6"/><rect x="186" y="0" width="6" height="6"/>
+    <rect x="198" y="0" width="6" height="6"/><rect x="198" y="6" width="6" height="6"/><rect x="198" y="12" width="6" height="6"/><rect x="198" y="18" width="6" height="6"/><rect x="204" y="30" width="6" height="6"/><rect x="210" y="36" width="6" height="6"/><rect x="216" y="36" width="6" height="6"/><rect x="222" y="30" width="6" height="6"/><rect x="222" y="24" width="6" height="6"/><rect x="222" y="18" width="6" height="6"/><rect x="222" y="12" width="6" height="6"/><rect x="222" y="6" width="6" height="6"/><rect x="222" y="0" width="6" height="6"/>
+    <rect x="234" y="0" width="6" height="6"/><rect x="240" y="0" width="6" height="6"/><rect x="246" y="0" width="6" height="6"/><rect x="246" y="6" width="6" height="6"/><rect x="246" y="12" width="6" height="6"/><rect x="246" y="18" width="6" height="6"/><rect x="246" y="24" width="6" height="6"/><rect x="246" y="30" width="6" height="6"/><rect x="246" y="36" width="6" height="6"/><rect x="240" y="36" width="6" height="6"/><rect x="234" y="36" width="6" height="6"/>
+  </svg>
   <ul>
-    <li><a href="#" onclick="goTo(0);return false;">about</a></li>
+    <li><a href="#" onclick="goTo(1);return false;">about</a></li>
     <li><a href="#" onclick="goTo(2);return false;">skills</a></li>
     <li><a href="#" onclick="goTo(3);return false;">pricing</a></li>
     <li><a href="#" onclick="goTo(4);return false;">contact</a></li>
@@ -134,55 +133,44 @@ textarea{height:90px;}
 <div id="panels">
 
   <div class="panel" id="p0">
-    <div class="grid-lines"></div>
-    <div class="grid-fade"></div>
-    <div class="hero-center">
+    <div class="stars" id="stars"></div>
+    <div class="hero-c">
       <div class="hero-name">nul<br>punkt</div>
       <div class="hero-sub">finding the zero point</div>
     </div>
-    <div class="origin">→ scroll or use arrow keys</div>
+    <div class="hint">scroll or use arrow keys →</div>
   </div>
 
   <div class="panel" id="p1">
-    <div class="left">
+    <div class="a-left">
       <h2>ABOUT</h2>
-      <div class="index">01 / 04</div>
+      <div class="idx">01 / 04</div>
     </div>
-    <div class="right">
-      <p>in mathematics, <strong>nulpunkt</strong> is the neutral point where axes meet. in physics, absolute zero — where thermal motion reaches its minimum.<br><br>in collaboration: <strong>a shared starting point.</strong> no assumptions, no agendas, no predefined solutions. clarity replaces noise.<br><br>because without a defined zero point, <strong>all variation becomes noise.</strong></p>
+    <div class="a-right">
+      <div class="words" id="aboutWords"></div>
     </div>
   </div>
 
   <div class="panel" id="p2">
-    <div class="skills-header">
-      <h2>SKILLS</h2>
-    </div>
-    <div class="skills-grid">
-      <div class="skill-item">
-        <div class="skill-n">01</div>
-        <div class="skill-t">operational<br>optimization</div>
-        <div class="skill-d">identifying inefficiencies in complex e-commerce operations — making them measurable, predictable, and fixable</div>
-      </div>
-      <div class="skill-item">
-        <div class="skill-n">02</div>
-        <div class="skill-t">architecture</div>
-        <div class="skill-d">designing systems that scale — from tech stack decisions to workflow design and organizational structure</div>
-      </div>
-      <div class="skill-item">
-        <div class="skill-n">03</div>
-        <div class="skill-t">automation</div>
-        <div class="skill-d">removing friction through intelligent automation — so humans focus on what actually requires human judgment</div>
+    <div class="skill-orbit" id="orbit">
+      <div class="orbit-ring" style="width:30%;height:30%;"></div>
+      <div class="orbit-ring" style="width:55%;height:55%;"></div>
+      <div class="orbit-ring" style="width:80%;height:80%;"></div>
+      <div class="orbit-ring" style="width:100%;height:100%;"></div>
+      <div class="origin">
+        <h2>SKILLS</h2>
+        <p>orbit the zero point</p>
       </div>
     </div>
   </div>
 
   <div class="panel" id="p3">
-    <div class="pricing-inner">
-      <div class="price-label">pricing</div>
-      <div class="price-word">expensive</div>
-      <div class="price-body">
-        <div class="price-col"><p>quality work at the right price. if budget is the primary concern, we are probably not the right fit — and that is okay.</p></div>
-        <div class="price-col"><p><strong>without a defined zero point, all variation becomes noise.</strong> every engagement starts by establishing shared coordinates — not diving into solutions before the problem is properly defined.</p></div>
+    <div class="pr-inner">
+      <div class="pr-lbl">03 / 04 — pricing</div>
+      <div class="pr-word">expensive</div>
+      <div class="pr-body">
+        <div class="pr-col"><p>quality work at the right price. if budget is the primary concern, we are probably not the right fit — and that is okay.</p></div>
+        <div class="pr-col"><p><strong>without a defined zero point, all variation becomes noise.</strong> every engagement starts by establishing shared coordinates — not diving into solutions before the problem is properly defined.</p></div>
       </div>
     </div>
   </div>
@@ -190,7 +178,7 @@ textarea{height:90px;}
   <div class="panel" id="p4">
     <div class="c-left">
       <h2>CON<br>TACT</h2>
-      <div class="status">available for new projects</div>
+      <div class="c-status">available for new projects</div>
     </div>
     <div class="c-right">
       <div class="two">
@@ -223,40 +211,84 @@ document.addEventListener('mousemove',e=>{
 },{passive:true});
 (function lerp(){cx+=(mx-cx)*0.1;cy+=(my-cy)*0.1;cur2.style.transform=`translate(calc(${cx}px - 50%),calc(${cy}px - 50%))`;requestAnimationFrame(lerp);})();
 
+// STARS — static, no animation
+const starsEl=document.getElementById('stars');
+for(let i=0;i<200;i++){
+  const s=document.createElement('span');
+  const size=Math.random()*1.5+0.5;
+  s.style.cssText=`width:${size}px;height:${size}px;top:${Math.random()*100}%;left:${Math.random()*100}%;opacity:${Math.random()*0.6+0.1};`;
+  starsEl.appendChild(s);
+}
+
 // PANELS
 let cur_=0,locked=false;
 const panels=document.getElementById('panels');
 const dots=document.querySelectorAll('.dot');
-
 function goTo(n){
   cur_=Math.max(0,Math.min(4,n));
   panels.style.transform=`translateX(-${cur_*100}vw)`;
   dots.forEach((d,i)=>d.classList.toggle('active',i===cur_));
+  if(cur_===1) revealAbout();
+  if(cur_===2) buildSkills();
 }
 
-// WHEEL
 window.addEventListener('wheel',e=>{
-  if(locked)return;
-  if(Math.abs(e.deltaY)<10)return;
+  if(locked||Math.abs(e.deltaY)<15)return;
   locked=true;
   e.deltaY>0?goTo(cur_+1):goTo(cur_-1);
-  setTimeout(()=>locked=false,850);
+  setTimeout(()=>locked=false,900);
 },{passive:true});
 
-// TOUCH
-let tx=0,ty=0;
-window.addEventListener('touchstart',e=>{tx=e.touches[0].clientX;ty=e.touches[0].clientY;},{passive:true});
+let tx=0;
+window.addEventListener('touchstart',e=>{tx=e.touches[0].clientX;},{passive:true});
 window.addEventListener('touchend',e=>{
   const dx=e.changedTouches[0].clientX-tx;
-  const dy=e.changedTouches[0].clientY-ty;
-  if(Math.abs(dx)>Math.abs(dy)&&Math.abs(dx)>40){dx<0?goTo(cur_+1):goTo(cur_-1);}
+  if(Math.abs(dx)>50){dx<0?goTo(cur_+1):goTo(cur_-1);}
 },{passive:true});
 
-// KEYS
 window.addEventListener('keydown',e=>{
-  if(e.key==='ArrowRight'||e.key==='ArrowDown')goTo(cur_+1);
-  if(e.key==='ArrowLeft'||e.key==='ArrowUp')goTo(cur_-1);
+  if(e.key==='ArrowRight'||e.key==='ArrowDown') goTo(cur_+1);
+  if(e.key==='ArrowLeft'||e.key==='ArrowUp') goTo(cur_-1);
 });
+
+// ABOUT — word reveal
+const aboutRaw='in mathematics nulpunkt is the neutral point where axes meet — neither positive nor negative. in physics absolute zero where thermal motion reaches its minimum. in collaboration <strong>a shared starting point.</strong> no assumptions no agendas no predefined solutions. clarity replaces noise. because without a defined zero point <strong>all variation becomes noise.</strong>';
+const aboutEl=document.getElementById('aboutWords');
+aboutEl.innerHTML=aboutRaw.split(' ').map(w=>`<span class="w">${w} </span>`).join('');
+let aboutDone=false;
+function revealAbout(){
+  if(aboutDone)return;aboutDone=true;
+  aboutEl.querySelectorAll('.w').forEach((s,i)=>setTimeout(()=>{s.style.opacity='1';s.style.transform='translateY(0)';},i*55));
+}
+
+// SKILLS — positioned nodes, CSS animation only
+const skillsData=[
+  {label:'operational optimization',orbit:50,angle:20},
+  {label:'architecture',orbit:36,angle:140},
+  {label:'automation',orbit:43,angle:260},
+  {label:'e-commerce',orbit:28,angle:80},
+  {label:'systems thinking',orbit:46,angle:200},
+  {label:'pattern recognition',orbit:38,angle:320},
+];
+let skillsDone=false;
+function buildSkills(){
+  if(skillsDone)return;skillsDone=true;
+  const orbit=document.getElementById('orbit');
+  skillsData.forEach((s,i)=>{
+    const rad=s.angle*Math.PI/180;
+    const r=s.orbit;
+    const x=50+r*Math.cos(rad);
+    const y=50+r*Math.sin(rad);
+    const node=document.createElement('div');
+    node.className='skill-node';
+    node.style.cssText=`left:${x}%;top:${y}%;`;
+    node.innerHTML=`<div class="node-dot"></div><div class="node-label">${s.label}</div>`;
+    node.style.opacity='0';
+    node.style.transition=`opacity .6s ${i*0.1}s`;
+    orbit.appendChild(node);
+    setTimeout(()=>node.style.opacity='1',50);
+  });
+}
 </script>
 </body>
 </html>
