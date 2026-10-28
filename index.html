@@ -1,303 +1,298 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>nulpunkt</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Nulpunkt</title>
+<meta name="description" content="Nulpunkt is run by Gustav Mariegaard, a physics student and freelancer helping businesses get more out of their systems. Subcontractor for Klejn Agency.">
+<meta property="og:title" content="Nulpunkt">
+<meta property="og:description" content="Run by Gustav Mariegaard. Subcontractor for Klejn Agency.">
+<meta property="og:type" content="website">
+<meta name="theme-color" content="#ffffff">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Cpath fill='%23111' fill-rule='evenodd' d='M0 0h32v32H0z M11 11h10v10H11z'/%3E%3C/svg%3E">
+<script>document.documentElement.classList.add('js')</script>
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Inter:wght@300;400;700;900&display=swap');
-*{box-sizing:border-box;margin:0;padding:0;}
-html,body{width:100%;height:100%;overflow:hidden;background:#000;color:#fff;font-family:'Inter',sans-serif;cursor:none !important;}
-canvas{position:fixed;inset:0;z-index:0;}
-*{cursor:none !important;}
+  :root {
+    --bg: #ffffff;
+    --fg: #111111;
+    --grey: #8f8f93;
+    --line: #dcdcdf;
+    color-scheme: light;
+  }
+  * { box-sizing: border-box; }
+  html { -webkit-text-size-adjust: 100%; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--fg);
+    font-family: "Helvetica Neue", Helvetica, Arial, "Liberation Sans", system-ui, sans-serif;
+    font-size: 13px;
+    line-height: 1.4;
+    -webkit-font-smoothing: antialiased;
+  }
+  .sr-only {
+    position: absolute; width: 1px; height: 1px; margin: -1px; padding: 0;
+    overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0;
+  }
+  .page {
+    position: relative;
+    min-height: 100vh;
+    min-height: 100svh;
+    display: grid;
+    grid-template-rows: auto 1fr auto;
+    padding: clamp(16px, 2vw, 24px);
+    gap: clamp(24px, 4vw, 48px);
+  }
+  #fx { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; z-index: 0; }
+  .top, .bottom, main { position: relative; z-index: 1; }
+  .top, .bottom { display: flex; justify-content: space-between; gap: 16px; font-size: 12px; }
+  #coord { font-variant-numeric: tabular-nums; }
+  main { align-self: center; }
 
-#intro{position:fixed;inset:0;z-index:100;display:flex;align-items:center;justify-content:center;cursor:none;background:#000;}
-#intro-text{font-family:'Space Mono',monospace;font-size:clamp(4rem,12vw,10rem);font-weight:700;letter-spacing:0.1em;color:#fff;user-select:none;transition:opacity 0.5s;}
+  .slot {
+    width: min(100%, 760px);
+    aspect-ratio: 516 / 112;
+    margin: 0 0 clamp(44px, 7vw, 96px);
+    color: var(--fg);
+    touch-action: pan-y;
+  }
+  .slot svg { display: block; width: 100%; height: 100%; }
+  .js .slot svg { visibility: hidden; }
+  .js .slot.rest svg { visibility: visible; }
 
-#cur{display:none;}
-#cur2{position:fixed;width:40px;height:40px;border-radius:50%;background:#fff;pointer-events:none;z-index:9999;will-change:transform;transform:translate(-50%,-50%);mix-blend-mode:difference;}
+  /* one large, quiet sentence; the email is the only black type */
+  .statement {
+    margin: 0;
+    max-width: 14em;
+    font-size: clamp(28px, 4.6vw, 64px);
+    line-height: 1.04;
+    letter-spacing: -0.035em;
+    color: var(--grey);
+  }
+  .statement span, .statement > a { display: block; white-space: nowrap; }
+  .statement > a { color: var(--fg); text-decoration: none; padding-bottom: 12px; margin-bottom: -12px; }
+  .statement span a { color: inherit; text-decoration: none; padding: 10px 0 0; }
+  .statement span a:hover { color: var(--fg); }
+  .statement a:hover { text-decoration: underline; text-decoration-thickness: 0.06em; text-underline-offset: 0.12em; }
 
+  .bio {
+    margin: clamp(22px, 3vw, 36px) 0 0;
+    max-width: 34em;
+    font-size: clamp(15px, 1.35vw, 18px);
+    line-height: 1.45;
+    letter-spacing: -0.01em;
+    color: var(--grey);
+  }
+  .links { margin: 14px 0 0; font-size: clamp(15px, 1.35vw, 18px); letter-spacing: -0.01em; color: var(--grey); }
+  .links a { display: inline-block; padding: 12px 12px 12px 0; margin: -12px -12px -12px 0; text-decoration: underline; text-decoration-color: currentColor; text-underline-offset: 0.18em; text-decoration-thickness: 0.06em; }
+  .links a:hover { color: var(--fg); }
+  a { color: inherit; text-decoration: none; -webkit-tap-highlight-color: rgba(255, 77, 0, 0.18); }
+  a:hover { text-decoration: underline; text-underline-offset: 3px; }
+  a:focus-visible { outline: 2px solid currentColor; outline-offset: 3px; }
 
-
-#panels{position:fixed;inset:0;z-index:10;display:flex;width:500vw;transition:transform 0.9s cubic-bezier(0.77,0,0.175,1);}
-.panel{width:100vw;height:100vh;flex-shrink:0;display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden;}
-
-#nav-arrows{position:fixed;right:2rem;bottom:2rem;z-index:50;display:flex;flex-direction:row;gap:0.5rem;mix-blend-mode:difference;}
-.arrow-btn{width:36px;height:36px;border:1px solid rgba(255,255,255,0.3);border-radius:50%;background:transparent;color:#fff;font-size:0.9rem;display:flex;align-items:center;justify-content:center;cursor:pointer;transition:all 0.2s;}
-.arrow-btn:hover{background:rgba(255,255,255,0.15);border-color:#fff;}
-
-/* P0 — PULSAR HERO */
-#p0 canvas{position:absolute;inset:0;width:100%;height:100%;}
-
-#p0 .manifesto{position:absolute;bottom:3rem;left:3rem;z-index:2;max-width:320px;font-size:0.65rem;line-height:1.8;color:rgba(255,255,255,0.25);letter-spacing:0.02em;}
-
-/* P1 — ABOUT */
-#p1{background:#fff;color:#000;}
-#p1 .about-word{font-size:clamp(1.5rem,4vw,3.5rem);font-weight:900;line-height:1.1;max-width:700px;padding:3rem;}
-#p1 .about-word span{display:inline-block;opacity:0;transform:translateY(30px);transition:all 0.6s;}
-#p1 .label{position:absolute;top:3rem;left:3rem;font-size:0.7rem;letter-spacing:0.3em;text-transform:uppercase;color:#999;}
-
-/* P2 — SKILLS SOLAR */
-#p2{background:#000;}
-#p2 canvas{position:absolute;inset:0;width:100%;height:100%;}
-#p2 .skills-label{position:absolute;top:3rem;left:3rem;font-size:0.7rem;letter-spacing:0.3em;text-transform:uppercase;color:rgba(255,255,255,0.3);z-index:2;}
-
-/* P3 — PRICING */
-#p3{background:#000;}
-#p3 .price-wrap{position:relative;z-index:2;text-align:center;}
-#p3 .price-word{font-family:'Space Mono',monospace;font-size:clamp(4rem,12vw,10rem);font-weight:700;letter-spacing:0.1em;color:transparent;-webkit-text-stroke:1px rgba(255,255,255,0.25);transition:all 0.3s;cursor:default;}
-#p3 .price-word:hover{-webkit-text-stroke:1px #fff;color:#fff;text-shadow:0 0 80px rgba(255,255,255,0.3);}
-#p3 .label{position:absolute;top:3rem;left:3rem;font-size:0.7rem;letter-spacing:0.3em;text-transform:uppercase;color:rgba(255,255,255,0.3);}
-
-/* P4 — CONTACT */
-#p4{background:#fff;color:#000;align-items:stretch;}
-#p4 .contact-inner{display:grid;grid-template-columns:1fr 1fr;width:100%;height:100%;padding:3rem;gap:2rem;align-items:center;}
-#p4 .contact-left{display:flex;align-items:flex-end;}
-#p4 .contact-left h2{font-size:clamp(4rem,10vw,9rem);font-weight:900;line-height:0.85;letter-spacing:-0.03em;color:#000;}
-#p4 .contact-right{background:rgba(0,0,0,0.04);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border:0.5px solid rgba(0,0,0,0.08);border-radius:16px;padding:2rem;display:flex;flex-direction:column;gap:0.75rem;}
-input,textarea{width:100%;padding:0.85rem 1rem;background:rgba(0,0,0,0.03);border:0.5px solid rgba(0,0,0,0.1);border-radius:10px;color:#000;font-family:'Inter',sans-serif;font-size:0.85rem;outline:none;transition:border-color 0.2s,background 0.2s;resize:none;}
-input::placeholder,textarea::placeholder{color:rgba(0,0,0,0.3);}
-input:focus,textarea:focus{border-color:rgba(0,0,0,0.3);background:rgba(0,0,0,0.06);}
-textarea{height:100px;}
-.btn{padding:0.9rem;background:#000;color:#fff;border:none;border-radius:10px;font-family:'Inter',sans-serif;font-size:0.8rem;letter-spacing:0.15em;cursor:pointer;transition:opacity 0.2s;text-transform:lowercase;}
-.btn:hover{opacity:0.75;}
-
-@media(max-width:700px){
-  nav ul{display:none;}
-  #p4 .contact-inner{grid-template-columns:1fr;overflow-y:auto;}
-  #p4 .contact-left{align-items:flex-start;border-right:none;border-bottom:1px solid rgba(0,0,0,0.1);padding:2rem;}
-  #p4 .contact-right{padding:2rem;}
-}
+  @media (max-width: 720px) {
+    .statement { font-size: 5.9vw; }
+  }
 </style>
 </head>
 <body>
+<div class="page">
+  <canvas id="fx" aria-hidden="true"></canvas>
 
-<div id="cur"></div>
-<div id="cur2"></div>
+  <header class="top">
+    <span id="coord" aria-hidden="true">(0, 0)</span>
+  </header>
 
-<canvas id="bg"></canvas>
-
-<div id="intro"><div id="intro-text">nulpunkt</div></div>
-
-<div id="panels">
-
-  <div class="panel" id="p0">
-    <canvas id="pulsarCanvas"></canvas>
-
-  </div>
-
-  <div class="panel" id="p1">
-    <div class="label">about</div>
-    <div class="about-word" id="aboutText"></div>
-  </div>
-
-  <div class="panel" id="p2">
-    <canvas id="skillCanvas"></canvas>
-    <div class="skills-label">skills</div>
-  </div>
-
-  <div class="panel" id="p3">
-    <div class="label">pricing — what it costs</div>
-    <div class="price-wrap">
-      <div class="price-word">expensive</div>
+  <main>
+    <h1 class="sr-only">Nulpunkt</h1>
+    <div class="slot" id="slot">
+      <svg role="img" aria-label="nulpunkt" viewBox="31 24 516 112" fill="currentColor"><path d="M 360 42 L 359 43 L 359 116 L 360 117 L 378 117 L 378 62 L 379 61 L 405 61 L 406 62 L 406 117 L 425 117 L 425 52 L 416 52 L 415 51 L 415 42 L 388 42 L 388 51 L 387 52 L 379 52 L 378 51 L 378 43 L 377 42 Z"/><path d="M 285 42 L 284 43 L 284 107 L 285 108 L 293 108 L 294 109 L 294 117 L 321 117 L 321 109 L 322 108 L 330 108 L 331 109 L 331 117 L 350 117 L 350 43 L 349 42 L 332 42 L 331 43 L 331 98 L 330 99 L 304 99 L 303 98 L 303 43 L 302 42 Z"/><path d="M 210 42 L 209 43 L 209 136 L 227 136 L 228 135 L 228 118 L 229 117 L 265 117 L 265 109 L 266 108 L 274 108 L 275 107 L 275 53 L 274 52 L 266 52 L 265 51 L 265 42 L 238 42 L 237 43 L 237 51 L 236 52 L 229 52 L 228 51 L 228 43 L 227 42 Z M 228 62 L 229 61 L 255 61 L 256 62 L 256 98 L 255 99 L 229 99 L 228 98 Z"/><path d="M 106 42 L 106 108 L 114 108 L 115 109 L 115 117 L 143 117 L 143 109 L 144 108 L 152 108 L 153 109 L 153 117 L 171 117 L 171 42 L 153 42 L 153 98 L 152 99 L 125 99 L 124 98 L 124 42 Z"/><path d="M 31 42 L 31 117 L 49 117 L 49 62 L 50 61 L 77 61 L 78 62 L 78 117 L 96 117 L 96 52 L 88 52 L 87 51 L 87 43 L 86 42 L 60 42 L 59 43 L 59 51 L 58 52 L 50 52 L 49 51 L 49 42 Z"/><path d="M 519 24 L 519 32 L 518 33 L 510 33 L 510 51 L 509 52 L 500 52 L 500 70 L 509 70 L 510 71 L 510 108 L 518 108 L 519 109 L 519 117 L 547 117 L 547 99 L 529 99 L 528 98 L 528 71 L 529 70 L 547 70 L 547 52 L 529 52 L 528 51 L 528 24 Z"/><path d="M 435 24 L 435 117 L 453 117 L 453 81 L 454 80 L 462 80 L 463 81 L 463 89 L 471 89 L 472 90 L 472 117 L 490 117 L 490 89 L 482 89 L 481 88 L 481 80 L 473 80 L 472 79 L 472 71 L 473 70 L 481 70 L 481 62 L 482 61 L 490 61 L 490 42 L 473 42 L 472 43 L 472 60 L 471 61 L 463 61 L 463 70 L 462 71 L 454 71 L 453 70 L 453 24 Z"/><path d="M 181 24 L 181 117 L 199 117 L 199 24 Z"/></svg>
     </div>
-  </div>
 
-  <div class="panel" id="p4">
-    <div class="contact-inner">
-      <div class="contact-left"><h2>CON<br>TACT</h2></div>
-      <div class="contact-right">
-        <input type="text" placeholder="name">
-        <input type="email" placeholder="email">
-        <input type="tel" placeholder="phone">
-        <textarea placeholder="message"></textarea>
-        <button class="btn">submit</button>
-      </div>
-    </div>
-  </div>
+    <p class="statement"><span>Run by Gustav Mariegaard.</span><span>Subcontractor for <a href="https://klejn.agency/" target="_blank" rel="noopener">Klejn Agency</a>.</span><a href="mailto:gm@nulpunkt.tech">gm@nulpunkt.tech</a></p>
+    <p class="bio">Physics student at Aalborg University with a background in e-commerce and project management. Freelances alongside the studies, helping businesses get more out of their systems.</p>
+    <p class="links"><a href="https://www.linkedin.com/in/gustav-mariegaard-3a19aa16a/" target="_blank" rel="noopener noreferrer">LinkedIn</a></p>
+  </main>
 
-</div>
-
-<div id="nav-arrows">
-  <button class="arrow-btn" onclick="goTo(current-1)">←</button>
-  <button class="arrow-btn" onclick="goTo(current+1)">→</button>
+  <footer class="bottom">
+    <span>&copy; 2026 Nulpunkt</span>
+  </footer>
 </div>
 
 <script>
-// CURSOR
-const cur=document.getElementById('cur'),cur2=document.getElementById('cur2');
-let mx=0,my=0,cx=0,cy=0;
-document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY;cur.style.left=mx+'px';cur.style.top=my+'px';},{passive:true});
-setInterval(()=>{cx+=(mx-cx)*0.35;cy+=(my-cy)*0.35;cur2.style.left=cx+'px';cur2.style.top=cy+'px';},16);
+/* The logo is drawn as ~3,000 pixels that fly out from (0, 0), settle into the
+   wordmark and scatter away from the pointer or a finger. At rest the real SVG
+   takes over. Falls back to the plain SVG if anything fails, and stays still
+   when reduced motion is requested. */
+(function () {
+  var root = document.documentElement;
+  try {
+    var D = ["M 360 42 L 359 43 L 359 116 L 360 117 L 378 117 L 378 62 L 379 61 L 405 61 L 406 62 L 406 117 L 425 117 L 425 52 L 416 52 L 415 51 L 415 42 L 388 42 L 388 51 L 387 52 L 379 52 L 378 51 L 378 43 L 377 42 Z", "M 285 42 L 284 43 L 284 107 L 285 108 L 293 108 L 294 109 L 294 117 L 321 117 L 321 109 L 322 108 L 330 108 L 331 109 L 331 117 L 350 117 L 350 43 L 349 42 L 332 42 L 331 43 L 331 98 L 330 99 L 304 99 L 303 98 L 303 43 L 302 42 Z", "M 210 42 L 209 43 L 209 136 L 227 136 L 228 135 L 228 118 L 229 117 L 265 117 L 265 109 L 266 108 L 274 108 L 275 107 L 275 53 L 274 52 L 266 52 L 265 51 L 265 42 L 238 42 L 237 43 L 237 51 L 236 52 L 229 52 L 228 51 L 228 43 L 227 42 Z M 228 62 L 229 61 L 255 61 L 256 62 L 256 98 L 255 99 L 229 99 L 228 98 Z", "M 106 42 L 106 108 L 114 108 L 115 109 L 115 117 L 143 117 L 143 109 L 144 108 L 152 108 L 153 109 L 153 117 L 171 117 L 171 42 L 153 42 L 153 98 L 152 99 L 125 99 L 124 98 L 124 42 Z", "M 31 42 L 31 117 L 49 117 L 49 62 L 50 61 L 77 61 L 78 62 L 78 117 L 96 117 L 96 52 L 88 52 L 87 51 L 87 43 L 86 42 L 60 42 L 59 43 L 59 51 L 58 52 L 50 52 L 49 51 L 49 42 Z", "M 519 24 L 519 32 L 518 33 L 510 33 L 510 51 L 509 52 L 500 52 L 500 70 L 509 70 L 510 71 L 510 108 L 518 108 L 519 109 L 519 117 L 547 117 L 547 99 L 529 99 L 528 98 L 528 71 L 529 70 L 547 70 L 547 52 L 529 52 L 528 51 L 528 24 Z", "M 435 24 L 435 117 L 453 117 L 453 81 L 454 80 L 462 80 L 463 81 L 463 89 L 471 89 L 472 90 L 472 117 L 490 117 L 490 89 L 482 89 L 481 88 L 481 80 L 473 80 L 472 79 L 472 71 L 473 70 L 481 70 L 481 62 L 482 61 L 490 61 L 490 42 L 473 42 L 472 43 L 472 60 L 471 61 L 463 61 L 463 70 L 462 71 L 454 71 L 453 70 L 453 24 Z", "M 181 24 L 181 117 L 199 117 L 199 24 Z"];
+    var UNIT = 3, COLS = 172, ROWS = 38;
+    var slot = document.getElementById('slot');
+    var canvas = document.getElementById('fx');
+    var coord = document.getElementById('coord');
+    var ctx = canvas.getContext('2d');
+    var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-// BG STARS
-const bg=document.getElementById('bg');
-const bctx=bg.getContext('2d');
-let bW,bH;
-function resizeBg(){bW=bg.width=window.innerWidth;bH=bg.height=window.innerHeight;}
-resizeBg();window.addEventListener('resize',resizeBg);
-const stars=[];
-for(let i=0;i<400;i++)stars.push({x:Math.random()*5000,y:Math.random()*3000,r:Math.random()*1.2+0.2,o:Math.random(),s:Math.random()*0.01+0.003});
-function drawBg(){
-  bctx.fillStyle='rgba(0,0,0,0.2)';bctx.fillRect(0,0,bW,bH);
-  stars.forEach(s=>{
-    s.o+=s.s;
-    const op=0.2+0.5*Math.abs(Math.sin(s.o));
-    bctx.beginPath();bctx.arc(s.x%bW,s.y%bH,s.r,0,Math.PI*2);
-    bctx.fillStyle=`rgba(255,255,255,${op})`;bctx.fill();
-  });
-  requestAnimationFrame(drawBg);
-}
-drawBg();
+    // 1. Sample the wordmark into a grid of pixels
+    var off = document.createElement('canvas');
+    off.width = COLS; off.height = ROWS;
+    var octx = off.getContext('2d', { willReadFrequently: true });
+    octx.scale(1 / UNIT, 1 / UNIT);
+    octx.translate(-31, -24);
+    D.forEach(function (d) { octx.fill(new Path2D(d)); });
+    var img = octx.getImageData(0, 0, COLS, ROWS).data;
+    var P = [];
+    for (var gy = 0; gy < ROWS; gy++) {
+      for (var gx = 0; gx < COLS; gx++) {
+        if (img[(gy * COLS + gx) * 4 + 3] > 110) {
+          P.push({ gx: gx, gy: gy, x: 0, y: 0, vx: 0, vy: 0, tx: 0, ty: 0, delay: 0 });
+        }
+      }
+    }
 
-// PULSAR
-const pc=document.getElementById('pulsarCanvas');
-const pctx=pc.getContext('2d');
-let pW,pH,pFrame=0;
-function resizeP(){pW=pc.width=pc.offsetWidth;pH=pc.height=pc.offsetHeight;}
-resizeP();window.addEventListener('resize',resizeP);
-function drawPulsar(){
-  pctx.fillStyle='rgba(0,0,0,0.18)';pctx.fillRect(0,0,pW,pH);
-  const cx=pW/2,cy=pH/2;
-  const beamAngle=pFrame*0.016;
-  for(let b=0;b<2;b++){
-    const a=beamAngle+b*Math.PI;
-    const grad=pctx.createLinearGradient(cx,cy,cx+Math.cos(a)*pW,cy+Math.sin(a)*pH);
-    grad.addColorStop(0,'rgba(255,255,255,0.3)');
-    grad.addColorStop(0.5,'rgba(255,255,255,0.06)');
-    grad.addColorStop(1,'rgba(255,255,255,0)');
-    pctx.beginPath();pctx.moveTo(cx,cy);
-    const sp=0.035;
-    pctx.lineTo(cx+Math.cos(a-sp)*pW*2,cy+Math.sin(a-sp)*pH*2);
-    pctx.lineTo(cx+Math.cos(a+sp)*pW*2,cy+Math.sin(a+sp)*pH*2);
-    pctx.closePath();pctx.fillStyle=grad;pctx.fill();
+    var dpr = 1, W = 0, H = 0, cell = 1, R = 90, PUSH = 40;
+    var box = { x0: 0, y0: 0, x1: 0, y1: 0 };
+    var pointer = null, running = false, t0 = 0, last = 0, lastMove = 0;
+    var K = 0.075, DAMP = 0.8;
+    var ACC = [255, 77, 0], LV = 10, PAL = [], DT = 30;   // orange while a pixel is away from its place
+
+    function palette() {
+      var m = getComputedStyle(document.body).color.match(/[\d.]+/g) || [17, 17, 17];
+      var fg = [+m[0], +m[1], +m[2]];
+      PAL = [];
+      for (var i = 0; i <= LV; i++) {
+        var t = i / LV;
+        PAL.push('rgb(' + Math.round(fg[0] + (ACC[0] - fg[0]) * t) + ',' +
+                          Math.round(fg[1] + (ACC[1] - fg[1]) * t) + ',' +
+                          Math.round(fg[2] + (ACC[2] - fg[2]) * t) + ')');
+      }
+    }
+
+    function layout(intro) {
+      var pr = canvas.parentElement.getBoundingClientRect();
+      var sr = slot.getBoundingClientRect();
+      dpr = Math.min(window.devicePixelRatio || 1, 2);
+      W = pr.width; H = pr.height;
+      canvas.width = Math.round(W * dpr);
+      canvas.height = Math.round(H * dpr);
+      var ox = sr.left - pr.left, oy = sr.top - pr.top;
+      cell = sr.width / COLS;
+      box = { x0: ox, y0: oy, x1: ox + sr.width, y1: oy + sr.height };
+      R = Math.min(130, Math.max(60, sr.width * 0.14));
+      PUSH = R * 0.45;
+      DT = Math.max(24, R * 0.4);
+      palette();
+      for (var i = 0; i < P.length; i++) {
+        var p = P[i];
+        p.tx = ox + p.gx * cell;
+        p.ty = oy + p.gy * cell;
+        if (intro) {
+          p.x = (Math.random() - 0.5) * 6; p.y = (Math.random() - 0.5) * 6;
+          p.vx = 0; p.vy = 0;
+          p.delay = (p.gx / COLS) * 750 + Math.random() * 260;
+        } else {
+          p.x = p.tx; p.y = p.ty; p.vx = 0; p.vy = 0; p.delay = 0;
+        }
+      }
+    }
+
+    function draw() {
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      ctx.clearRect(0, 0, W, H);
+      var s = Math.ceil(cell * dpr) / dpr, i, p, l;
+      for (i = 0; i < P.length; i++) {
+        p = P[i];
+        var d = Math.sqrt((p.x - p.tx) * (p.x - p.tx) + (p.y - p.ty) * (p.y - p.ty));
+        p.lv = Math.min(LV, Math.round(Math.pow(Math.min(1, d / DT), 0.6) * LV));
+      }
+      for (l = 0; l <= LV; l++) {
+        ctx.fillStyle = PAL[l];
+        for (i = 0; i < P.length; i++) {
+          p = P[i];
+          if (p.lv === l) ctx.fillRect(Math.round(p.x * dpr) / dpr, Math.round(p.y * dpr) / dpr, s, s);
+        }
+      }
+    }
+
+    function step(now) {
+      var dt = Math.min((now - last) / 16.67, 2.5); last = now;
+      var t = now - t0, active = false, R2 = R * R;
+      for (var i = 0; i < P.length; i++) {
+        var p = P[i];
+        if (t < p.delay) { active = true; continue; }
+        var ax = (p.tx - p.x) * K, ay = (p.ty - p.y) * K;
+        if (pointer) {
+          var dx = p.x - pointer.x, dy = p.y - pointer.y, d2 = dx * dx + dy * dy;
+          if (d2 < R2) {
+            var d = Math.sqrt(d2) || 1, f = Math.pow(1 - d / R, 2) * PUSH;
+            ax += dx / d * f; ay += dy / d * f;
+          }
+        }
+        var damp = Math.pow(DAMP, dt);
+        p.vx = (p.vx + ax * dt) * damp; p.vy = (p.vy + ay * dt) * damp;
+        p.x += p.vx * dt; p.y += p.vy * dt;
+        if (Math.abs(p.tx - p.x) > 0.05 || Math.abs(p.ty - p.y) > 0.05 ||
+            Math.abs(p.vx) > 0.05 || Math.abs(p.vy) > 0.05) active = true;
+      }
+      draw();
+      if (active || pointer || now - lastMove < 1200) { requestAnimationFrame(step); }
+      else {
+        running = false;
+        ctx.setTransform(dpr, 0, 0, dpr, 0, 0); ctx.clearRect(0, 0, W, H);
+        slot.classList.add('rest');
+      }
+    }
+
+    function start() {
+      if (running) return;
+      running = true; last = performance.now();
+      slot.classList.remove('rest');
+      requestAnimationFrame(step);
+    }
+
+    function aim(e) {
+      coord.textContent = '(' + Math.round(e.pageX) + ', ' + Math.round(e.pageY) + ')';
+      var near = e.pageX > box.x0 - R && e.pageX < box.x1 + R &&
+                 e.pageY > box.y0 - R && e.pageY < box.y1 + R;
+      if (near) {
+        pointer = { x: e.pageX, y: e.pageY };
+        lastMove = performance.now();
+        start();
+      } else {
+        pointer = null;
+      }
+    }
+    function release(e) {
+      if (e.pointerType && e.pointerType !== 'mouse') { pointer = null; lastMove = performance.now(); }
+    }
+
+    layout(!reduce);
+    root.classList.add('live');
+    if (reduce) {
+      slot.classList.add('rest');
+    } else {
+      t0 = performance.now();
+      start();
+      window.addEventListener('pointermove', aim, { passive: true });
+      window.addEventListener('pointerdown', aim, { passive: true });
+      window.addEventListener('pointerup', release, { passive: true });
+      window.addEventListener('pointercancel', release, { passive: true });
+      document.documentElement.addEventListener('mouseleave', function () { pointer = null; });
+      window.addEventListener('blur', function () { pointer = null; });
+    }
+
+    var rt;
+    window.addEventListener('resize', function () {
+      clearTimeout(rt);
+      rt = setTimeout(function () { layout(false); if (running) draw(); }, 150);
+    });
+  } catch (err) {
+    root.classList.remove('js');   // show the plain SVG logo instead
+    if (window.console) console.error(err);
   }
-  for(let r=0;r<5;r++){
-    const phase=((pFrame*0.01)+r*0.2)%1;
-    const radius=phase*Math.min(pW,pH)*0.55;
-    const op=(1-phase)*0.12;
-    pctx.beginPath();pctx.arc(cx,cy,radius,0,Math.PI*2);
-    pctx.strokeStyle=`rgba(255,255,255,${op})`;pctx.lineWidth=1;pctx.stroke();
-  }
-  // Core glow
-  const cg=pctx.createRadialGradient(cx,cy,0,cx,cy,20);
-  cg.addColorStop(0,'rgba(255,255,255,0.9)');
-  cg.addColorStop(0.4,'rgba(255,255,255,0.2)');
-  cg.addColorStop(1,'rgba(255,255,255,0)');
-  pctx.beginPath();pctx.arc(cx,cy,20,0,Math.PI*2);pctx.fillStyle=cg;pctx.fill();
-  pctx.beginPath();pctx.arc(cx,cy,3,0,Math.PI*2);pctx.fillStyle='#fff';pctx.fill();
-  pFrame++;requestAnimationFrame(drawPulsar);
-}
-drawPulsar();
-
-// INTRO
-const intro=document.getElementById('intro');
-setTimeout(()=>{
-  document.getElementById('intro-text').style.opacity='0';
-  setTimeout(()=>{intro.style.display='none';},500);
-},1800);
-
-// PANELS
-let current=0,locked=false;
-const panels=document.getElementById('panels');
-function goTo(n){
-  current=Math.max(0,Math.min(4,n));
-  panels.style.transform=`translateX(-${current*100}vw)`;
-  if(current===1)revealAbout();
-  if(current===2)startSkills();
-}
-window.addEventListener('wheel',e=>{
-  if(locked)return;locked=true;
-  if(e.deltaY>5)goTo(current+1);
-  else if(e.deltaY<-5)goTo(current-1);
-  setTimeout(()=>locked=false,1000);
-},{passive:true});
-let tx=0;
-window.addEventListener('touchstart',e=>tx=e.touches[0].clientX,{passive:true});
-window.addEventListener('touchend',e=>{
-  const dx=e.changedTouches[0].clientX-tx;
-  if(Math.abs(dx)>50){dx<0?goTo(current+1):goTo(current-1);}
-},{passive:true});
-window.addEventListener('keydown',e=>{
-  if(e.key==='ArrowRight'||e.key==='ArrowDown')goTo(current+1);
-  if(e.key==='ArrowLeft'||e.key==='ArrowUp')goTo(current-1);
-});
-
-// ABOUT
-const words='finding patterns in complex systems within e-commerce making them predictable and applicable'.split(' ');
-const aboutEl=document.getElementById('aboutText');
-words.forEach(w=>{const s=document.createElement('span');s.textContent=w+' ';aboutEl.appendChild(s);});
-let aboutDone=false;
-function revealAbout(){
-  if(aboutDone)return;aboutDone=true;
-  aboutEl.querySelectorAll('span').forEach((s,i)=>setTimeout(()=>{s.style.opacity='1';s.style.transform='translateY(0)';},i*80));
-}
-
-// SOLAR SYSTEM
-const sc=document.getElementById('skillCanvas');
-const sctx=sc.getContext('2d');
-let sW,sH,skillsRunning=false;
-function resizeSc(){sW=sc.width=sc.offsetWidth;sH=sc.height=sc.offsetHeight;}
-resizeSc();window.addEventListener('resize',resizeSc);
-const planets=[
-  {label:'operational optimization',orbit:0.12,speed:0.008,angle:0.5,size:3.5,col:'rgba(255,255,255,0.9)'},
-  {label:'architecture',orbit:0.19,speed:0.005,angle:2.2,size:5,col:'rgba(255,255,255,0.85)'},
-  {label:'automation',orbit:0.26,speed:0.004,angle:4.0,size:4,col:'rgba(255,255,255,0.8)'},
-  {label:'e-commerce',orbit:0.33,speed:0.003,angle:1.2,size:6,col:'rgba(255,255,255,0.85)'},
-  {label:'systems thinking',orbit:0.39,speed:0.002,angle:3.5,size:3.5,col:'rgba(255,255,255,0.75)'},
-  {label:'pattern recognition',orbit:0.44,speed:0.0015,angle:0.8,size:3,col:'rgba(255,255,255,0.7)'},
-];
-function drawSolar(){
-  if(!skillsRunning)return;
-  sctx.clearRect(0,0,sW,sH);
-  const cx=sW/2,cy=sH/2;
-  const base=Math.min(sW,sH)*0.45;
-
-  // Orbit rings — more visible
-  planets.forEach(p=>{
-    sctx.beginPath();sctx.arc(cx,cy,p.orbit*base*2,0,Math.PI*2);
-    sctx.strokeStyle='rgba(255,255,255,0.12)';sctx.lineWidth=0.5;sctx.stroke();
-  });
-
-  // Sun glow
-  const sg=sctx.createRadialGradient(cx,cy,0,cx,cy,35);
-  sg.addColorStop(0,'rgba(255,240,160,1)');
-  sg.addColorStop(0.3,'rgba(255,200,60,0.5)');
-  sg.addColorStop(0.7,'rgba(255,140,0,0.15)');
-  sg.addColorStop(1,'rgba(255,100,0,0)');
-  sctx.beginPath();sctx.arc(cx,cy,35,0,Math.PI*2);sctx.fillStyle=sg;sctx.fill();
-  sctx.beginPath();sctx.arc(cx,cy,8,0,Math.PI*2);
-  sctx.fillStyle='rgba(255,245,180,1)';sctx.fill();
-
-  // Planets
-  planets.forEach(p=>{
-    p.angle+=p.speed;
-    const r=p.orbit*base*2;
-    const x=cx+Math.cos(p.angle)*r;
-    const y=cy+Math.sin(p.angle)*r;
-    // Glow
-    const pg=sctx.createRadialGradient(x,y,0,x,y,p.size*3);
-    pg.addColorStop(0,'rgba(255,255,255,0.25)');pg.addColorStop(1,'rgba(255,255,255,0)');
-    sctx.beginPath();sctx.arc(x,y,p.size*3,0,Math.PI*2);sctx.fillStyle=pg;sctx.fill();
-    // Planet
-    sctx.beginPath();sctx.arc(x,y,p.size,0,Math.PI*2);sctx.fillStyle=p.col;sctx.fill();
-    // Label — clamped inside canvas
-    sctx.font='12px Inter';
-    sctx.fillStyle='rgba(255,255,255,0.55)';
-    const side=x>cx?1:-1;
-    const lx=x+side*(p.size+8);
-    const ly=Math.max(16,Math.min(sH-8,y+4));
-    sctx.textAlign=side>0?'left':'right';
-    // Clamp label horizontally
-    const measure=sctx.measureText(p.label).width;
-    const clampedLx=side>0?Math.min(lx,sW-measure-8):Math.max(lx,measure+8);
-    sctx.fillText(p.label,clampedLx,ly);
-  });
-  requestAnimationFrame(drawSolar);
-}
-function startSkills(){
-  if(skillsRunning)return;skillsRunning=true;drawSolar();
-}
+})();
 </script>
 </body>
 </html>
