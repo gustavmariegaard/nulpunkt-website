@@ -87,53 +87,6 @@
   .links a { display: inline-block; padding: 12px 12px 12px 0; margin: -12px -12px -12px 0; text-decoration: underline; text-decoration-color: currentColor; text-underline-offset: 0.18em; text-decoration-thickness: 0.06em; }
   .links a:hover { color: var(--fg); }
 
-  /* contact pop-up */
-  dialog#contact { --fs: 28px; border: 0; padding: 0; width: 100%; max-width: none; height: 100%; max-height: none; background: var(--bg); color: var(--fg); }
-  @media (min-width: 721px) { dialog#contact { --fs: 36px; } }
-  @media (min-width: 1000px) { dialog#contact { --fs: 40px; } }
-  @media (min-width: 1300px) { dialog#contact { --fs: 44px; } }
-  dialog#contact::backdrop { background: var(--bg); }
-  body:has(dialog#contact[open]) { overflow: hidden; }
-  @media (prefers-reduced-motion: no-preference) {
-    dialog#contact[open] { animation: sheet-in 240ms ease-out; }
-    @keyframes sheet-in { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: none; } }
-  }
-  .sheet { min-height: 100%; display: grid; grid-template-rows: auto 1fr auto;
-           padding: max(clamp(16px, 2vw, 24px), env(safe-area-inset-top)) clamp(16px, 2vw, 24px) max(clamp(16px, 2vw, 24px), env(safe-area-inset-bottom)); }
-  .sheet-top { display: flex; justify-content: space-between; font-size: 12px; line-height: 16px; }
-  .sheet-top button { font: inherit; color: inherit; background: none; border: 0; cursor: pointer; padding: 12px 0 12px 16px; margin: -12px 0 -12px -16px; }
-  .sheet-top button:hover { text-decoration: underline; text-underline-offset: 3px; }
-  #contact form, #contact .status { width: 100%; max-width: 820px; align-self: start; margin-top: 14vh; margin-top: round(down, 14vh, 1px); }
-  #contact .status { outline: none; }
-
-  .row { position: relative; }
-  .field { display: block; width: 100%; border: 0; border-bottom: 1px solid var(--line); border-radius: 0; background: transparent; color: var(--fg);
-           font: inherit; font-size: var(--fs); line-height: calc(var(--fs) + 4px); letter-spacing: -0.03em; padding: 30px 0 12px; outline: none; caret-color: #ff4d00; }
-  .field::placeholder { color: var(--grey); opacity: 1; }
-  .field:focus { border-bottom-color: #ff4d00; }
-  .field[aria-invalid="true"] { border-bottom-color: #ff4d00; }
-  textarea.field { resize: none; min-height: calc(2 * (var(--fs) + 4px) + 42px); max-height: 40vh; overflow-y: auto; }
-  .row label { position: absolute; top: 8px; left: 0; font-size: 12px; line-height: 1; color: var(--grey);
-               opacity: 0; transform: translateY(4px); transition: opacity 150ms, transform 150ms; pointer-events: none; }
-  .field:not(:placeholder-shown) + label { opacity: 1; transform: none; }
-  .err { margin: 8px 0 0; font-size: 13px; line-height: 18px; }
-  .err::before { content: ""; display: inline-block; width: 6px; height: 6px; margin-right: 8px; background: #ff4d00; vertical-align: middle; }
-
-  .send { margin-top: 26px; font: inherit; font-size: var(--fs); letter-spacing: -0.03em; background: none; border: 0; padding: 8px 0; cursor: pointer; color: var(--fg); }
-  .send:hover { text-decoration: underline; text-decoration-thickness: 0.06em; text-underline-offset: 0.12em; }
-  .send:focus-visible, .sheet-top button:focus-visible, .done:focus-visible { outline: 2px solid currentColor; outline-offset: 4px; }
-  .send[disabled] { color: var(--grey); cursor: default; text-decoration: none; }
-  .note { margin: 6px 0 0; font-size: 14px; line-height: 20px; }
-  .note a, .hint a { color: var(--fg); text-decoration: underline; text-underline-offset: 3px; }
-  .hint { margin: 22px 0 0; max-width: 46em; font-size: 13px; line-height: 20px; color: var(--grey); }
-
-  .status { font-size: var(--fs); line-height: calc(var(--fs) + 2px); letter-spacing: -0.03em; color: var(--grey); }
-  .status .dot { display: inline-block; width: 0.14em; height: 0.14em; margin-left: 0.04em; background: #ff4d00; }
-  .done { display: inline-block; margin-top: 24px; font: inherit; font-size: clamp(18px, 2vw, 24px); letter-spacing: -0.02em; background: none; border: 0; padding: 8px 0; cursor: pointer; color: var(--fg); text-decoration: underline; text-underline-offset: 0.18em; }
-  .hp { position: absolute; left: -9999px; width: 0; height: 0; opacity: 0; }
-  @media (max-width: 720px) {
-    #contact form, #contact .status { margin-top: 9vh; margin-top: round(down, 9vh, 1px); }
-  }
   a { color: inherit; text-decoration: none; -webkit-tap-highlight-color: rgba(255, 77, 0, 0.18); }
   a:hover { text-decoration: underline; text-underline-offset: 3px; }
   a:focus-visible { outline: 2px solid currentColor; outline-offset: 3px; }
@@ -159,45 +112,13 @@
 
     <p class="statement"><span>Run by Gustav Mariegaard.</span><span>Subcontractor for <a href="https://klejn.agency/" target="_blank" rel="noopener">Klejn Agency</a>.</span><a href="mailto:gm@nulpunkt.tech">gm@nulpunkt.tech</a></p>
     <p class="bio">Physics student at Aalborg University with a background in e-commerce and project management. Freelances alongside the studies, helping businesses get more out of their systems.</p>
-    <p class="links"><a id="contact-link" href="mailto:gm@nulpunkt.tech">Send a message</a><a href="https://www.linkedin.com/in/gustav-mariegaard-3a19aa16a/" target="_blank" rel="noopener noreferrer">LinkedIn</a></p>
+    <p class="links"><a href="mailto:gm@nulpunkt.tech">Send a message</a><a href="https://www.linkedin.com/in/gustav-mariegaard-3a19aa16a/" target="_blank" rel="noopener noreferrer">LinkedIn</a></p>
   </main>
 
   <footer class="bottom">
     <span>&copy; 2026 Nulpunkt</span>
   </footer>
 </div>
-
-<dialog id="contact" aria-labelledby="contact-title" aria-describedby="contact-hint">
-  <div class="sheet">
-    <div class="sheet-top">
-      <span id="contact-title">Contact</span>
-      <button type="button" id="contact-close">Close</button>
-    </div>
-    <form id="contact-form" novalidate>
-      <div class="row">
-        <input class="field" id="c-name" name="name" type="text" placeholder="Your name" autocomplete="name" enterkeyhint="next" required aria-describedby="e-name">
-        <label for="c-name">Name</label>
-        <p class="err" id="e-name" hidden></p>
-      </div>
-      <div class="row">
-        <input class="field" id="c-email" name="email" type="email" placeholder="Your email" autocomplete="email" inputmode="email" autocapitalize="off" spellcheck="false" enterkeyhint="next" required aria-describedby="e-email">
-        <label for="c-email">Email</label>
-        <p class="err" id="e-email" hidden></p>
-      </div>
-      <div class="row">
-        <textarea class="field" id="c-msg" name="message" rows="1" placeholder="What are you working on?" required aria-describedby="e-message"></textarea>
-        <label for="c-msg">Message</label>
-        <p class="err" id="e-message" hidden></p>
-      </div>
-      <input class="hp" type="text" name="_honey" tabindex="-1" autocomplete="off" aria-hidden="true">
-      <button class="send" type="submit">Send</button>
-      <p class="note" id="contact-note" role="alert" hidden></p>
-      <p class="hint" id="contact-hint">Prefer email? <a href="mailto:gm@nulpunkt.tech">gm@nulpunkt.tech</a></p>
-    </form>
-    <div class="status" id="contact-status" tabindex="-1" hidden></div>
-    <div></div>
-  </div>
-</dialog>
 
 <script>
 /* The logo is drawn as ~3,000 pixels that fly out from (0, 0), settle into the
@@ -333,7 +254,6 @@
     }
 
     function aim(e) {
-      if (document.getElementById('contact').open) return;
       coord.textContent = '(' + Math.round(e.pageX) + ', ' + Math.round(e.pageY) + ')';
       var near = e.pageX > box.x0 - R && e.pageX < box.x1 + R &&
                  e.pageY > box.y0 - R && e.pageY < box.y1 + R;
@@ -373,101 +293,6 @@
     root.classList.remove('js');   // show the plain SVG logo instead
     if (window.console) console.error(err);
   }
-})();
-</script>
-
-<script>
-/* Contact pop-up. Messages go through FormSubmit (formsubmit.co): no account and no key.
-   The first message sent from the live site triggers one activation email to the address
-   below. Click the link in it once and every message after that arrives in your inbox. */
-(function () {
-  var ENDPOINT = 'https://formsubmit.co/ajax/gm@nulpunkt.tech';
-  var link = document.getElementById('contact-link');
-  var dlg = document.getElementById('contact');
-  if (!link || !dlg || typeof dlg.showModal !== 'function') return;   // old browsers just get the mailto link
-
-  function $(id) { return document.getElementById(id); }
-  var form = $('contact-form'), status = $('contact-status'), send = form.querySelector('.send'), note = $('contact-note');
-  var fields = { name: $('c-name'), email: $('c-email'), message: $('c-msg') };
-  var KEYS = ['name', 'email', 'message'];
-  var MSG = { name: 'Please add your name.', email: 'Please add a valid email.', message: 'Please write a short message.' };
-
-  function grow() { var m = fields.message; m.style.height = 'auto'; m.style.height = m.scrollHeight + 'px'; }
-  function check(k) {
-    var v = fields[k].value.trim();
-    if (!v) return MSG[k];
-    if (k === 'email' && !/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(v)) return MSG[k];
-    return '';
-  }
-  function setError(k, msg) {
-    var el = fields[k], p = $('e-' + k);
-    if (msg) { el.setAttribute('aria-invalid', 'true'); p.textContent = msg; p.hidden = false; }
-    else { el.removeAttribute('aria-invalid'); p.textContent = ''; p.hidden = true; }
-  }
-  function busy(b) { send.disabled = b; send.textContent = b ? 'Sending\u2026' : 'Send'; }
-
-  KEYS.forEach(function (k, i) {
-    var el = fields[k];
-    el.addEventListener('input', function () { if (el.getAttribute('aria-invalid')) setError(k, check(k)); if (k === 'message') grow(); });
-    if (k === 'email') el.addEventListener('blur', function () { if (el.value.trim()) setError(k, check(k)); });
-    el.addEventListener('keydown', function (e) {
-      if (e.key === 'Enter' && k !== 'message') { e.preventDefault(); fields[KEYS[i + 1]].focus(); }           // Enter moves on
-      if (e.key === 'Enter' && k === 'message' && (e.metaKey || e.ctrlKey)) { e.preventDefault(); form.requestSubmit(); }
-    });
-  });
-
-  link.addEventListener('click', function (e) {
-    e.preventDefault();
-    form.hidden = false; status.hidden = true; note.hidden = true; busy(false);
-    KEYS.forEach(function (k) { setError(k, ''); });                    // the draft stays, the errors go
-    dlg.showModal(); grow();
-    (KEYS.map(function (k) { return fields[k]; }).filter(function (el) { return !el.value.trim(); })[0] || fields.name).focus();
-  });
-  $('contact-close').addEventListener('click', function () { dlg.close(); });
-
-  function done(name) {
-    form.reset(); grow();
-    status.textContent = '';
-    status.appendChild(document.createTextNode('Thanks, ' + name + '. I will reply from gm@nulpunkt.tech'));
-    var dot = document.createElement('span'); dot.className = 'dot'; dot.setAttribute('aria-hidden', 'true'); status.appendChild(dot);
-    status.appendChild(document.createElement('br'));
-    var b = document.createElement('button'); b.type = 'button'; b.className = 'done'; b.textContent = 'Back to the site';
-    b.addEventListener('click', function () { dlg.close(); });
-    status.appendChild(b);
-    form.hidden = true; status.hidden = false; status.focus();
-  }
-
-  form.addEventListener('submit', function (e) {
-    e.preventDefault();
-    if (form.elements['_honey'].value) return;                           // bots fill the hidden field
-    var first = null;
-    KEYS.forEach(function (k) { var m = check(k); setError(k, m); if (m && !first) first = k; });
-    if (first) { fields[first].focus(); return; }
-    var name = fields.name.value.trim();
-    busy(true); note.hidden = true;
-    if (ENDPOINT === 'PREVIEW') { setTimeout(function () { done(name); }, 700); return; }   // preview: nothing is sent
-    var ctl = new AbortController(), t = setTimeout(function () { ctl.abort(); }, 12000);
-    var data = new FormData(form);
-    data.append('_subject', 'Message from nulpunkt.tech');
-    data.append('_captcha', 'false');
-    fetch(ENDPOINT, { method: 'POST', headers: { Accept: 'application/json' }, body: data, signal: ctl.signal })
-      .then(function (r) { return r.json(); })
-      .then(function (j) {
-        clearTimeout(t);
-        if (j.success === true || j.success === 'true') { done(name); return; }
-        if (/activat/i.test(j.message || '')) {                          // the very first message: FormSubmit asks you to confirm once
-          busy(false);
-          note.textContent = 'Almost there: open the activation email sent to gm@nulpunkt.tech, click the link, then send again.';
-          note.hidden = false; return;
-        }
-        throw new Error(j.message || 'failed');
-      })
-      .catch(function () {
-        clearTimeout(t); busy(false);                                    // keep everything typed so far
-        note.innerHTML = 'Could not send. Try again, or write to <a href="mailto:gm@nulpunkt.tech">gm@nulpunkt.tech</a>.';
-        note.hidden = false;
-      });
-  });
 })();
 </script>
 </body>
